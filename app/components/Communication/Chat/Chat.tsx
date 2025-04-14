@@ -1,9 +1,10 @@
 import Message from "./Message/Message";
 import { EuiText, EuiHeader, EuiTitle } from "@elastic/eui";
+import styles from './Chat.module.css';
 
 export default function Chat() {
     return (
-        <div>
+        <div className={styles.container}>
             <EuiHeader>
                 <EuiTitle size="m">
                     <EuiText>Chat</EuiText>

@@ -1,0 +1,68 @@
+{
+    "nodes": [
+        {
+            "id": "hub-1",
+            "type": "hub",
+            "data": {
+                "label": "Home Base"
+            },
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "id": "event-1",
+            "type": "event",
+            "data": {
+                "label": "Wake Up"
+            },
+            "position": {
+                "x": 200,
+                "y": 200
+            }
+        },
+        {
+            "id": "event-2",
+            "type": "event",
+            "data": {
+                "label": "Stretch and Get Ready"
+            },
+            "position": {
+                "x": 250,
+                "y": 200
+            }
+        },
+        {
+            "id": "event-3",
+            "type": "event",
+            "data": {
+                "label": "Eat Breakfast"
+            },
+            "position": {
+                "x": 400,
+                "y": 200
+            }
+        }
+    ],
+    "edges": [
+        {
+            "id": "e1-2",
+            "source": "event-1",
+            "target": "event-2",
+            "type": "straight"
+        },
+        {
+            "id": "e2-3",
+            "source": "event-2",
+            "target": "event-3",
+            "type": "straight"
+        },
+        {
+            "id": "e3-hub",
+            "source": "event-3",
+            "target": "hub-1",
+            "type": "straight"
+        }
+    ]
+}
