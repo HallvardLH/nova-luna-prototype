@@ -16,7 +16,7 @@ import GraphFlowEditor from './GraphFlowEditor';
  */
 export default function GraphPage() {
     return (
-        <div style={{ width: '100vw', height: '100vh' }}>
+        <div style={{ width: 'calc(100vw - 250px)', height: '100vh' }}>
             <ReactFlowProvider>
                 <GraphFlowEditor />
             </ReactFlowProvider>

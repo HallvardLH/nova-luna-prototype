@@ -18,8 +18,8 @@
                 "label": "Wake Up"
             },
             "position": {
-                "x": 200,
-                "y": 200
+                "x": 240,
+                "y": 240
             }
         },
         {
@@ -29,8 +29,8 @@
                 "label": "Stretch and Get Ready"
             },
             "position": {
-                "x": 250,
-                "y": 200
+                "x": 480,
+                "y": 240
             }
         },
         {
@@ -40,8 +40,8 @@
                 "label": "Eat Breakfast"
             },
             "position": {
-                "x": 400,
-                "y": 200
+                "x": 720,
+                "y": 240
             }
         }
     ],
@@ -60,8 +60,10 @@
         },
         {
             "id": "e3-hub",
-            "source": "event-3",
-            "target": "hub-1",
+            "source": "hub-1",
+            "sourceHandle": "right-source",
+            "target": "event-1",
+            "targetHandle": "left-target",
             "type": "straight"
         }
     ]

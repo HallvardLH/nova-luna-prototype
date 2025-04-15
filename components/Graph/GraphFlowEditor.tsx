@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useState, ChangeEvent } from 'react';
+import React, { useCallback, useEffect, ChangeEvent } from 'react';
 import ReactFlow, {
     Background,
     Controls,
@@ -9,7 +9,7 @@ import ReactFlow, {
     applyNodeChanges,
     Connection,
     Edge,
-    Node,
+    // Node,
     // useReactFlow,
     Panel,
     BackgroundVariant,
@@ -20,6 +20,7 @@ import 'reactflow/dist/style.css';
 import HubNode from './graphComponents/hub';
 import QuestEventNode from './graphComponents/QuestEvent';
 import DeleteEdgeTooltip from './tooltips/DeleteEdgeTooltip';
+import { useGraphStore } from '@/stores/useGraphStore';
 
 // Key used for local storage of graph
 const STORAGE_KEY = 'graph-flow-data';
@@ -38,12 +39,32 @@ const nodeTypes = { hub: HubNode, event: QuestEventNode };
  * - Tooltip to delete selected edges
  */
 export default function GraphFlowEditor() {
-    const [nodes, setNodes] = useState<Node[]>([]);
-    const [edges, setEdges] = useState<Edge[]>([]);
+
+    // const [nodes, setNodes] = useState<Node[]>([]);
+    // const [edges, setEdges] = useState<Edge[]>([]);
     // const { fitView } = useReactFlow();
-    const [selectedEdgeId, setSelectedEdgeId] = useState<string | null>(null);
-    const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null);
-    const [edgeType, setEdgeType] = useState<'default' | 'straight' | 'step' | 'smoothstep'>('default');
+
+    const nodes = useGraphStore((state) => state.nodes);
+    const setNodes = useGraphStore((state) => state.setNodes);
+
+    const edges = useGraphStore((state) => state.edges);
+    const setEdges = useGraphStore((state) => state.setEdges);
+
+    const initializeGraph = useGraphStore((state) => state.initializeGraph);
+
+    const edgeType = useGraphStore((state) => state.edgeType);
+    const setEdgeType = useGraphStore((state) => state.setEdgeType);
+
+    const selectedEdgeId = useGraphStore((state) => state.selectedEdgeId);
+    const setSelectedEdgeId = useGraphStore((state) => state.setSelectedEdgeId);
+
+    const tooltipPosition = useGraphStore((state) => state.tooltipPosition);
+    const setTooltipPosition = useGraphStore((state) => state.setTooltipPosition);
+
+
+    useEffect(() => {
+        initializeGraph();
+    }, [initializeGraph]);
 
     /**
     * Loads graph data from localStorage or falls back to the static /graph.json file.
@@ -63,7 +84,7 @@ export default function GraphFlowEditor() {
             }
         };
         loadData();
-    }, []);
+    }, [setNodes, setEdges]);
 
     /**
     * Persists the current graph state to localStorage on every node or edge update.
@@ -77,7 +98,7 @@ export default function GraphFlowEditor() {
     */
     const onNodesChange = useCallback(
         (changes: NodeChange[]) => setNodes((nds) => applyNodeChanges(changes, nds)),
-        []
+        [setNodes]
     );
 
     /**
@@ -85,7 +106,7 @@ export default function GraphFlowEditor() {
     */
     const onEdgesChange = useCallback(
         (changes: EdgeChange[]) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-        []
+        [setEdges]
     );
 
     /**
@@ -99,7 +120,7 @@ export default function GraphFlowEditor() {
             ...connection,
             type: edgeType,
         }, eds)),
-        [edgeType]
+        [edgeType, setEdges]
     );
 
     /**
@@ -112,7 +133,7 @@ export default function GraphFlowEditor() {
             setSelectedEdgeId(edge.id);
             setTooltipPosition({ x: event.clientX, y: event.clientY });
         },
-        []
+        [setSelectedEdgeId, setTooltipPosition]
     );
 
     /**
@@ -124,7 +145,7 @@ export default function GraphFlowEditor() {
             setSelectedEdgeId(null);
             setTooltipPosition(null);
         }
-    }, [selectedEdgeId]);
+    }, [selectedEdgeId, setSelectedEdgeId, setTooltipPosition, setEdges]);
 
     /**
     * Deselects the edge and hides the tooltip if a click occurs outside it.
@@ -136,7 +157,7 @@ export default function GraphFlowEditor() {
         };
         window.addEventListener('click', handleClickOutside);
         return () => window.removeEventListener('click', handleClickOutside);
-    }, []);
+    }, [setSelectedEdgeId, setTooltipPosition]);
 
     return (
         <>
