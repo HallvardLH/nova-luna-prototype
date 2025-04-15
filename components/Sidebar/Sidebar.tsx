@@ -1,14 +1,15 @@
 import styles from './Sidebar.module.css';
 import BuildingBlockMenu from './buildingBlocks/BuildingBlockMenu';
-import { EuiFieldSearch, EuiHorizontalRule } from '@elastic/eui';
-import { useState } from 'react';
+// import { EuiFieldSearch, EuiHorizontalRule } from '@elastic/eui';
+import { EuiHorizontalRule } from '@elastic/eui';
+// import { useState } from 'react';
 
 export default function Sidebar() {
-    const [value, setValue] = useState('');
+    // const [value, setValue] = useState('');
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
-    };
+    // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setValue(e.target.value);
+    // };
 
     return (
         <div className={styles.container}>
