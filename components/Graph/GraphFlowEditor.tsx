@@ -22,9 +22,6 @@ import QuestEventNode from './graphComponents/QuestEvent';
 import DeleteEdgeTooltip from './tooltips/DeleteEdgeTooltip';
 import { useGraphStore } from '@/stores/useGraphStore';
 
-// Key used for local storage of graph
-const STORAGE_KEY = 'graph-flow-data';
-
 // We define node types here to avoid having to memoize in the component
 const nodeTypes = { hub: HubNode, event: QuestEventNode };
 
@@ -65,33 +62,6 @@ export default function GraphFlowEditor() {
     useEffect(() => {
         initializeGraph();
     }, [initializeGraph]);
-
-    /**
-    * Loads graph data from localStorage or falls back to the static /graph.json file.
-    */
-    useEffect(() => {
-        const loadData = async () => {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                const { nodes, edges } = JSON.parse(stored);
-                setNodes(nodes);
-                setEdges(edges);
-            } else {
-                const res = await fetch('/graph.json');
-                const data = await res.json();
-                setNodes(data.nodes);
-                setEdges(data.edges);
-            }
-        };
-        loadData();
-    }, [setNodes, setEdges]);
-
-    /**
-    * Persists the current graph state to localStorage on every node or edge update.
-    */
-    useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ nodes, edges }));
-    }, [nodes, edges]);
 
     /**
     * Handles changes to nodes (e.g. dragging, updating labels).
