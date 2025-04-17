@@ -1,5 +1,5 @@
 import styles from './Sidebar.module.css';
-import BuildingBlockMenu from './buildingBlocks/BuildingBlockMenu';
+import BuildingBlockMenu from './buildingBlocks/EntityButton';
 // import { EuiFieldSearch, EuiHorizontalRule } from '@elastic/eui';
 import { EuiHorizontalRule } from '@elastic/eui';
 import Image from 'next/image';
