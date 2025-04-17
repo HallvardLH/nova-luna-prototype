@@ -1,8 +1,6 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
-// =========================
-// Type Definitions
-// =========================
 type AgentType = {
     id: string;
     name: string;
@@ -36,95 +34,98 @@ type HubType = {
     description: string;
 };
 
-// =========================
-// Store Interface
-// =========================
-interface BuildingBlocksState {
-    // State Collections
+type EntityMap = {
     agents: AgentType[];
     questEvents: EventType[];
     objects: ObjectType[];
     tasks: TaskType[];
     hubs: HubType[];
+};
 
-    // Agent CRUD
-    addAgent: (agent: AgentType) => void;
-    updateAgent: (id: string, updates: Partial<Omit<AgentType, 'id'>>) => void;
-    deleteAgent: (id: string) => void;
-    getAgent: (id: string) => AgentType | undefined;
+// Represents the overall shape of the store state for managing various building block entities
+interface BuildingBlocksState extends EntityMap {
+    // Grouped utility actions to interact with entities in a generic and reusable way
+    actions: {
+        /**
+         * Adds a new item to a specific entity collection (e.g., 'agents', 'tasks', etc.).
+         * @param key - The key of the entity collection to add to (e.g., 'agents').
+         * @param item - The item to be added to the collection.
+         */
+        add: <K extends keyof EntityMap>(
+            key: K,
+            item: EntityMap[K][number]
+        ) => void;
 
-    // Quest Event CRUD
-    addQuestEvent: (event: EventType) => void;
-    updateQuestEvent: (id: string, updates: Partial<Omit<EventType, 'id'>>) => void;
-    deleteQuestEvent: (id: string) => void;
-    getQuestEvent: (id: string) => EventType | undefined;
+        /**
+         * Updates an existing item in a specific entity collection by ID.
+         * @param key - The key of the entity collection to update (e.g., 'tasks').
+         * @param id - The ID of the item to update.
+         * @param updates - A partial object containing the properties to update.
+         */
+        update: <K extends keyof EntityMap>(
+            key: K,
+            id: string,
+            updates: Partial<Omit<EntityMap[K][number], 'id'>>
+        ) => void;
 
-    // Object CRUD
-    addObject: (object: ObjectType) => void;
-    updateObject: (id: string, updates: Partial<Omit<ObjectType, 'id'>>) => void;
-    deleteObject: (id: string) => void;
-    getObject: (id: string) => ObjectType | undefined;
+        /**
+         * Deletes an item from a specific entity collection by ID.
+         * @param key - The key of the entity collection to delete from (e.g., 'objects').
+         * @param id - The ID of the item to delete.
+         */
+        delete: <K extends keyof EntityMap>(
+            key: K,
+            id: string
+        ) => void;
 
-    // Task CRUD
-    addTask: (task: TaskType) => void;
-    updateTask: (id: string, updates: Partial<Omit<TaskType, 'id'>>) => void;
-    deleteTask: (id: string) => void;
-    getTask: (id: string) => TaskType | undefined;
-
-    // Hub CRUD
-    addHub: (hub: HubType) => void;
-    updateHub: (id: string, updates: Partial<Omit<HubType, 'id'>>) => void;
-    deleteHub: (id: string) => void;
-    getHub: (id: string) => HubType | undefined;
+        /**
+         * Retrieves an item from a specific entity collection by ID.
+         * @param key - The key of the entity collection to retrieve from (e.g., 'hubs').
+         * @param id - The ID of the item to retrieve.
+         * @returns The found item, or undefined if not found.
+         */
+        get: <K extends keyof EntityMap>(
+            key: K,
+            id: string
+        ) => EntityMap[K][number] | undefined;
+    };
 }
 
-// =========================
-// Store Implementation
-// =========================
-export const useBuildingBlocksStore = create<BuildingBlocksState>((set, get) => ({
-    agents: [],
-    questEvents: [],
-    objects: [],
-    tasks: [],
-    hubs: [],
+export const useBuildingBlocksStore = create<BuildingBlocksState>()(
+    persist(
+        (set, get) => ({
+            agents: [],
+            questEvents: [],
+            objects: [],
+            tasks: [],
+            hubs: [],
 
-    // Agent Functions
-    addAgent: (agent) => set((state) => ({ agents: [...state.agents, agent] })),
-    updateAgent: (id, updates) => set((state) => ({
-        agents: state.agents.map(agent => agent.id === id ? { ...agent, ...updates } : agent)
-    })),
-    deleteAgent: (id) => set((state) => ({ agents: state.agents.filter(agent => agent.id !== id) })),
-    getAgent: (id) => get().agents.find(agent => agent.id === id),
+            actions: {
+                add: (key, item) =>
+                    set((state) => ({
+                        [key]: [...state[key], item],
+                    })),
 
-    // Quest Event Functions
-    addQuestEvent: (event) => set((state) => ({ questEvents: [...state.questEvents, event] })),
-    updateQuestEvent: (id, updates) => set((state) => ({
-        questEvents: state.questEvents.map(event => event.id === id ? { ...event, ...updates } : event)
-    })),
-    deleteQuestEvent: (id) => set((state) => ({ questEvents: state.questEvents.filter(event => event.id !== id) })),
-    getQuestEvent: (id) => get().questEvents.find(event => event.id === id),
+                update: (key, id, updates) =>
+                    set((state) => ({
+                        [key]: state[key].map((entry) =>
+                            entry.id === id ? { ...entry, ...updates } : entry
+                        ),
+                    })),
 
-    // Object Functions
-    addObject: (object) => set((state) => ({ objects: [...state.objects, object] })),
-    updateObject: (id, updates) => set((state) => ({
-        objects: state.objects.map(obj => obj.id === id ? { ...obj, ...updates } : obj)
-    })),
-    deleteObject: (id) => set((state) => ({ objects: state.objects.filter(obj => obj.id !== id) })),
-    getObject: (id) => get().objects.find(obj => obj.id === id),
+                delete: (key, id) =>
+                    set((state) => ({
+                        [key]: state[key].filter((entry) => entry.id !== id),
+                    })),
 
-    // Task Functions
-    addTask: (task) => set((state) => ({ tasks: [...state.tasks, task] })),
-    updateTask: (id, updates) => set((state) => ({
-        tasks: state.tasks.map(task => task.id === id ? { ...task, ...updates } : task)
-    })),
-    deleteTask: (id) => set((state) => ({ tasks: state.tasks.filter(task => task.id !== id) })),
-    getTask: (id) => get().tasks.find(task => task.id === id),
-
-    // Hub Functions
-    addHub: (hub) => set((state) => ({ hubs: [...state.hubs, hub] })),
-    updateHub: (id, updates) => set((state) => ({
-        hubs: state.hubs.map(hub => hub.id === id ? { ...hub, ...updates } : hub)
-    })),
-    deleteHub: (id) => set((state) => ({ hubs: state.hubs.filter(hub => hub.id !== id) })),
-    getHub: (id) => get().hubs.find(hub => hub.id === id),
-}));
+                get: (key, id) => {
+                    return get()[key].find((entry) => entry.id === id);
+                },
+            },
+        }),
+        {
+            name: 'building-blocks-storage',
+            storage: createJSONStorage(() => localStorage),
+        }
+    )
+);
