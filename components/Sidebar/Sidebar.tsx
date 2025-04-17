@@ -1,5 +1,5 @@
 import styles from './Sidebar.module.css';
-import BuildingBlockMenu from './buildingBlocks/EntityButton';
+import EntityButton from './buildingBlocks/EntityButton';
 // import { EuiFieldSearch, EuiHorizontalRule } from '@elastic/eui';
 import { EuiHorizontalRule } from '@elastic/eui';
 import Image from 'next/image';
@@ -14,19 +14,27 @@ export default function Sidebar() {
 
     return (
         <div className={styles.container}>
-            <Image
-                src={'/nova-luna-logo.svg'}
-                alt={""}
-                width={100}
-                height={100}
-            />
+            <div className={styles.top}>
+                <Image
+                    src={'/nova-luna-logo.svg'}
+                    alt={""}
+                    width={30}
+                    height={30}
+                />
+                <Image
+                    src={'/icons/close-menu.svg'}
+                    alt={""}
+                    width={30}
+                    height={30}
+                />
+            </div>
             <EuiHorizontalRule />
             <div className={styles.buildingBlocksContainer}>
-                <BuildingBlockMenu type="agent" />
-                <BuildingBlockMenu type="hub" />
-                <BuildingBlockMenu type="task" />
-                <BuildingBlockMenu type="event" />
-                <BuildingBlockMenu type="object" />
+                <EntityButton entity="agent" />
+                <EntityButton entity="hub" />
+                <EntityButton entity="task" />
+                <EntityButton entity="event" />
+                <EntityButton entity="object" />
                 <EuiHorizontalRule />
                 {/* <EuiFieldSearch
                     placeholder="Search"
@@ -34,7 +42,7 @@ export default function Sidebar() {
                     value={value}
                     aria-label="Use aria labels when no actual label is in use"
                 /> */}
-                <EuiHorizontalRule />
+                {/* <EuiHorizontalRule /> */}
             </div>
         </div>
     );

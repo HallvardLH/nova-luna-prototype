@@ -111,6 +111,9 @@ a.secondary {
 .sidebar {
   background-color: white;
   min-inline-size: 250px !important;
+  z-index: 1 !important;
+  overflow: visible !important;
+  border-right: 1px solid rgb(224, 223, 223);
 }
 
 /* Enable hover only on non-touch devices */

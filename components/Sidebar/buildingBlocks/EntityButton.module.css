@@ -1,7 +1,49 @@
 .container {
     display: flex;
     gap: 1rem;
-    margin-top: 1rem;
+    margin-top: .5rem;
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: .5rem;
+
 }
 
-.button {}
+.container:hover {
+    background-color: #f0f0f0;
+    /* Example hover effect */
+}
+
+/* Style for the selected entity */
+.selected {
+    background-color: #262450;
+    /* Blue background when selected */
+    color: white;
+    /* White text color when selected */
+    /* border: 1px solid #0070f3; */
+    /* Matching border */
+}
+
+.selected:hover {
+    background-color: #211f46;
+    /* Darker shade on hover */
+}
+
+.buttonWrapper {
+    position: relative;
+    z-index: 1;
+}
+
+/* Menu absolutely positioned relative to the wrapper */
+.menu {
+    z-index: 9999;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    margin-left: 8px;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}

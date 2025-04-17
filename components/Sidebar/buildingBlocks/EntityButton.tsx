@@ -1,25 +1,64 @@
-import Image from "next/image";
 import { EuiText } from "@elastic/eui";
+import { useSidebarStore } from "@/stores/useSidebarStore";
 import styles from "./EntityButton.module.css";
+import { EntityNames } from "@/app/types/entities";
+import EntityAddMenu from "./EntityAddMenu";
+import EntityIcon from "./EntityIcon";
 
-interface EntityMenuProps {
-    type: "agent" | "hub" | "task" | "event" | "object";
+interface EntityButtonProps {
+    entity: EntityNames;
 }
 
-export default function EntityMenu({ type }: EntityMenuProps) {
-    return (
-        <>
-            <div className={styles.container}>
-                <Image
-                    src={`/entities/${type}.svg`}
-                    alt={type}
-                    width={24}
-                    height={24}
-                />
-                {/* We capitalize the first letter and add an "s", making it plural */}
-                <EuiText>{type.charAt(0).toUpperCase() + type.slice(1) + "s"}</EuiText>
-            </div>
+export default function EntityButton({ entity }: EntityButtonProps) {
+    const selectedEntity = useSidebarStore((state) => state.selectedEntity);
+    const setSelectedEntity = useSidebarStore((state) => state.setSelectedEntity);
 
-        </>
+    const handleClick = () => {
+        setSelectedEntity(entity);
+    };
+
+    const isSelected = selectedEntity === entity;
+
+    return (
+        <div className={styles.buttonWrapper}>
+            <button
+                onClick={handleClick}
+                className={`${styles.container} ${isSelected ? styles.selected : ""}`}
+            >
+                <EntityIcon entity={entity} />
+                <EuiText>
+                    {entity.charAt(0).toUpperCase() + entity.slice(1) + "s"}
+                </EuiText>
+            </button>
+
+            {isSelected && (
+                <div className={styles.menu}>
+                    <EntityAddMenu
+                        entity={entity}
+                        visible={true}
+                        entities={[
+                            {
+                                id: "agent-001",
+                                name: "Shadowblade",
+                                description: "A stealthy operative from the east.",
+                                appearances: ["event-003", "event-007"]
+                            },
+                            {
+                                id: "agent-002",
+                                name: "Nova Spark",
+                                description: "Radiates pure chaotic energy.",
+                                appearances: ["event-001"]
+                            },
+                            {
+                                id: "agent-003",
+                                name: "The Archivist",
+                                description: "Knows every secret, including yours.",
+                                appearances: []
+                            }
+                        ]}
+                    />
+                </div>
+            )}
+        </div>
     );
 }

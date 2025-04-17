@@ -1,45 +1,14 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { Agent, Event, Object, Task, Hub } from '@/app/types/entities';
 
-type AgentType = {
-    id: string;
-    name: string;
-    description: string;
-    appearances: string[]; // Event IDs
-};
-
-type EventType = {
-    id: string;
-    name: string;
-    description: string;
-    occupants: string[]; // Agent and object IDs
-};
-
-type ObjectType = {
-    id: string;
-    name: string;
-    description: string;
-    appearances: string[]; // Event IDs
-};
-
-type TaskType = {
-    id: string;
-    name: string;
-    description: string;
-};
-
-type HubType = {
-    id: string;
-    name: string;
-    description: string;
-};
 
 type EntityMap = {
-    agents: AgentType[];
-    questEvents: EventType[];
-    objects: ObjectType[];
-    tasks: TaskType[];
-    hubs: HubType[];
+    agents: Agent[];
+    questEvents: Event[];
+    objects: Object[];
+    tasks: Task[];
+    hubs: Hub[];
 };
 
 // Represents the overall shape of the store state for managing various building block entities
