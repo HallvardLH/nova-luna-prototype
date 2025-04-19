@@ -2,6 +2,7 @@ import styles from "./EntityAddMenu.module.css";
 import { EntityMap, EntityNames } from "@/app/types/entities";
 import { EuiText, EuiHorizontalRule, EuiButton, EuiButtonIcon } from "@elastic/eui";
 import EntityIcon from "./EntityIcon";
+import { useModalStore, ModalName } from '@/stores/modalStore';
 /**
  * Displays a menu containing:
  * All already created entities for a given entity type
@@ -15,7 +16,15 @@ interface EntityAddMenuProps {
 }
 
 export default function EntityAddMenu({ entity, visible, entities, onClose }: EntityAddMenuProps) {
+
+
+    const open = useModalStore((state) => state.open);
+    const onSeeAll = () => {
+        open(entity + "Overview" as ModalName);
+    }
+
     if (!visible) return null;
+
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -24,6 +33,10 @@ export default function EntityAddMenu({ entity, visible, entities, onClose }: En
                 </EuiText>
                 <EuiButtonIcon onClick={onClose} iconType={"cross"} />
             </div>
+            <EuiHorizontalRule style={{ marginBlock: ".5rem" }} />
+            <EuiButton onClick={onSeeAll}>
+                Open {entity} overview
+            </EuiButton>
             <EuiHorizontalRule style={{ marginBlock: ".5rem" }} />
             <div className={styles.entityInstanceContainer}>
                 {entities.map((entityInstance, index) => (

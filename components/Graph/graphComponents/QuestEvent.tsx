@@ -3,6 +3,7 @@
 // import { useCallback } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
 import style from './Node.module.css';
+import EntityIcon from '@/components/Sidebar/buildingBlocks/EntityIcon';
 
 type HubNodeData = {
     label?: string;
@@ -20,11 +21,17 @@ function QuestEventNode({ data, isConnectable }: NodeProps<HubNodeData>) {
             backgroundColor: '#3b82f6',
             border: '2px solid #1d4ed8',
         }}>
-            <p style={{
-                textAlign: "center"
-            }}>
-                {data?.label || 'Event'}
-            </p>
+            <div className={style.contents}>
+                <p style={{
+                    textAlign: "center"
+                }}>
+                    {data?.label || 'Event'}
+                </p>
+                <div>
+                    <EntityIcon entity="object" />
+                    <EntityIcon entity="agent" />
+                </div>
+            </div>
             <Handle
                 type="target"
                 position={Position.Top}

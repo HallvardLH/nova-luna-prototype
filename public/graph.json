@@ -15,7 +15,11 @@
             "id": "event-1",
             "type": "event",
             "data": {
-                "label": "Wake Up"
+                "label": "Wake Up",
+                "occupants": [
+                    "Object",
+                    "Agent"
+                ]
             },
             "position": {
                 "x": 240,

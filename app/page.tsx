@@ -5,6 +5,7 @@ import Communication from "@/components/Communication/Communication";
 import GraphPage from "@/components/Graph/GraphPage";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { EuiPage, EuiPageBody, EuiPageSidebar, EuiPageSection } from "@elastic/eui";
+import AgentOverview from "@/components/Entities/AgentOverview";
 
 export default function Home() {
   return (
@@ -28,6 +29,7 @@ export default function Home() {
           </EuiPageSection>
         </EuiPageBody>
       </EuiPage>
+      <AgentOverview />
     </div>
   );
 }

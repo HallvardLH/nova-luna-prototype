@@ -60,30 +60,6 @@ export default function EntityButton({ entity }: EntityButtonProps) {
                                 description: "Knows every secret, including yours.",
                                 appearances: []
                             },
-                            {
-                                id: "agent-002",
-                                name: "Mister long name. His name is really long and has a tendency to mess up UIs",
-                                description: "Radiates pure chaotic energy.",
-                                appearances: ["event-001"]
-                            },
-                            {
-                                id: "agent-002",
-                                name: "Nova Spark",
-                                description: "Radiates pure chaotic energy.",
-                                appearances: ["event-001"]
-                            },
-                            {
-                                id: "agent-002",
-                                name: "Nova Spark",
-                                description: "Radiates pure chaotic energy.",
-                                appearances: ["event-001"]
-                            },
-                            {
-                                id: "agent-002",
-                                name: "Nova Spark",
-                                description: "Radiates pure chaotic energy.",
-                                appearances: ["event-001"]
-                            },
                         ]}
                     />
                 </div>
