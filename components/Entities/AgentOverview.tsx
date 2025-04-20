@@ -4,7 +4,6 @@ import {
     EuiModalHeaderTitle,
     EuiModalBody,
     EuiModalFooter,
-    EuiButton,
     EuiButtonEmpty,
 } from '@elastic/eui';
 import { useModalStore } from '@/stores/modalStore';
@@ -12,11 +11,9 @@ import { useModalStore } from '@/stores/modalStore';
 export default function AgentOverview() {
     const isOpen = useModalStore((state) => state.modals.agentOverview);
     const close = useModalStore((state) => state.close);
-    const open = useModalStore((state) => state.open);
 
     return (
         <div>
-            <EuiButton onClick={() => open('agentOverview')}>Open Agent Overview</EuiButton>
 
             {isOpen && (
                 <EuiModal onClose={() => close('agentOverview')}>

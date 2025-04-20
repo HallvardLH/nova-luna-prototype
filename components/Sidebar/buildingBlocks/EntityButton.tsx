@@ -1,9 +1,11 @@
 import { EuiText } from "@elastic/eui";
 import { useSidebarStore } from "@/stores/useSidebarStore";
+import { useEntitiesStore } from "@/stores/useEntitiesStore";
 import styles from "./EntityButton.module.css";
-import { EntityNames } from "@/app/types/entities";
+import { EntityNames, EntityMap } from "@/app/types/entities";
 import EntityAddMenu from "./EntityAddMenu";
 import EntityIcon from "./EntityIcon";
+import { EntitiesState } from "@/stores/useEntitiesStore";
 
 interface EntityButtonProps {
     entity: EntityNames;
@@ -12,6 +14,10 @@ interface EntityButtonProps {
 export default function EntityButton({ entity }: EntityButtonProps) {
     const selectedEntity = useSidebarStore((state) => state.selectedEntity);
     const setSelectedEntity = useSidebarStore((state) => state.setSelectedEntity);
+    const isSelected = selectedEntity === entity;
+
+    // Dynamically get the correct array of entities from the store
+    const entities: EntityMap[keyof EntityMap] = useEntitiesStore((state) => state[entity + "s" as keyof EntitiesState]) as EntityMap[keyof EntityMap];
 
     const handleClick = () => {
         setSelectedEntity(entity);
@@ -19,9 +25,7 @@ export default function EntityButton({ entity }: EntityButtonProps) {
 
     const handleClose = () => {
         setSelectedEntity("none");
-    }
-
-    const isSelected = selectedEntity === entity;
+    };
 
     return (
         <div className={styles.buttonWrapper}>
@@ -41,26 +45,7 @@ export default function EntityButton({ entity }: EntityButtonProps) {
                         entity={entity}
                         visible={true}
                         onClose={handleClose}
-                        entities={[
-                            {
-                                id: "agent-001",
-                                name: "Shadowblade",
-                                description: "A stealthy operative from the east.",
-                                appearances: ["event-003", "event-007"]
-                            },
-                            {
-                                id: "agent-002",
-                                name: "Nova Spark",
-                                description: "Radiates pure chaotic energy.",
-                                appearances: ["event-001"]
-                            },
-                            {
-                                id: "agent-003",
-                                name: "The Archivist",
-                                description: "Knows every secret, including yours.",
-                                appearances: []
-                            },
-                        ]}
+                        entities={entities}
                     />
                 </div>
             )}

@@ -3,16 +3,17 @@ import { EntityNames } from "@/app/types/entities";
 
 interface EntityIconProps {
     entity: EntityNames;
+    size?: number; // Optional size prop to set the width and height of the icon
 }
 
 
-export default function EntityIcon({ entity }: EntityIconProps) {
+export default function EntityIcon({ entity, size = 24 }: EntityIconProps) {
     return (
         <Image
             src={`/entities/${entity}.svg`}
             alt={entity}
-            width={24}
-            height={24}
+            width={size}
+            height={size}
         />
     )
 }

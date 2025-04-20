@@ -23,6 +23,10 @@ export default function EntityAddMenu({ entity, visible, entities, onClose }: En
         open(entity + "Overview" as ModalName);
     }
 
+    const openCreateNew = () => {
+        open("add" + entity.charAt(0).toUpperCase() + entity.slice(1) as ModalName);
+    }
+
     if (!visible) return null;
 
     return (
@@ -47,7 +51,7 @@ export default function EntityAddMenu({ entity, visible, entities, onClose }: En
                 ))}
             </div>
             <EuiHorizontalRule style={{ marginBlock: ".5rem" }} />
-            <EuiButton iconType={"plusInCircle"}>
+            <EuiButton onClick={openCreateNew} iconType={"plusInCircle"}>
                 New
             </EuiButton>
         </div>

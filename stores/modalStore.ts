@@ -8,7 +8,7 @@
 
 import { create } from 'zustand';
 
-export type ModalName = 'agentOverview' | 'eventOverview' | 'hubOverview' | 'objectOverview' | 'taskOverview';
+export type ModalName = 'agentOverview' | 'eventOverview' | 'hubOverview' | 'objectOverview' | 'taskOverview' | "addHub";
 
 type ModalStore = {
     /**
@@ -60,6 +60,8 @@ export const useModalStore = create<ModalStore>((set, get) => ({
         hubOverview: false,
         objectOverview: false,
         taskOverview: false,
+
+        addHub: false,
     },
     open: (modal) => set((state) => ({ modals: { ...state.modals, [modal]: true } })),
     close: (modal) => set((state) => ({ modals: { ...state.modals, [modal]: false } })),

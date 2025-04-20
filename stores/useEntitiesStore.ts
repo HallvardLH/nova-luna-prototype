@@ -5,14 +5,14 @@ import { Agent, Event, Object, Task, Hub } from '@/app/types/entities';
 
 type EntityMap = {
     agents: Agent[];
-    questEvents: Event[];
+    events: Event[];
     objects: Object[];
     tasks: Task[];
     hubs: Hub[];
 };
 
-// Represents the overall shape of the store state for managing various building block entities
-interface BuildingBlocksState extends EntityMap {
+// Represents the overall shape of the store state for managing various entities
+export interface EntitiesState extends EntityMap {
     // Grouped utility actions to interact with entities in a generic and reusable way
     actions: {
         /**
@@ -60,11 +60,11 @@ interface BuildingBlocksState extends EntityMap {
     };
 }
 
-export const useBuildingBlocksStore = create<BuildingBlocksState>()(
+export const useEntitiesStore = create<EntitiesState>()(
     persist(
         (set, get) => ({
             agents: [],
-            questEvents: [],
+            events: [],
             objects: [],
             tasks: [],
             hubs: [],
@@ -93,7 +93,7 @@ export const useBuildingBlocksStore = create<BuildingBlocksState>()(
             },
         }),
         {
-            name: 'building-blocks-storage',
+            name: 'entities-storage',
             storage: createJSONStorage(() => localStorage),
         }
     )
