@@ -13,7 +13,7 @@
         },
         {
             "id": "event-1",
-            "type": "event",
+            "type": "task",
             "data": {
                 "label": "Wake Up",
                 "occupants": [
@@ -28,7 +28,7 @@
         },
         {
             "id": "event-2",
-            "type": "event",
+            "type": "task",
             "data": {
                 "label": "Stretch and Get Ready"
             },
@@ -39,7 +39,7 @@
         },
         {
             "id": "event-3",
-            "type": "event",
+            "type": "task",
             "data": {
                 "label": "Eat Breakfast"
             },

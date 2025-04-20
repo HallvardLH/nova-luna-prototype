@@ -10,25 +10,26 @@ import ReactFlow, {
     Connection,
     Edge,
     // Node,
-    // useReactFlow,
+    useReactFlow,
     Panel,
     BackgroundVariant,
     NodeChange,
     EdgeChange
 } from 'reactflow';
 import 'reactflow/dist/style.css';
-import HubNode from './graphComponents/hub';
-import QuestEventNode from './graphComponents/QuestEvent';
+import HubNode from './graphComponents/HubNode';
+import TaskNode from './graphComponents/TaskNode';
 import DeleteEdgeTooltip from './tooltips/DeleteEdgeTooltip';
 import { useGraphStore } from '@/stores/useGraphStore';
+import { useDragStore } from '@/stores/useDragStore';
 
 // We define node types here to avoid having to memoize in the component
-const nodeTypes = { hub: HubNode, event: QuestEventNode };
+const nodeTypes = { hub: HubNode, task: TaskNode };
 
 
 /**
  * GraphFlowEditor renders an interactive node-based editor using React Flow. It supports:
- * - Custom node types (Hub and QuestEvent)
+ * - Custom node types (Hub and Task)
  * - Creating, editing, deleting edges and nodes
  * - Selecting edge type (curved, straight, stepped, etc.)
  * - Persisting graph data to localStorage
@@ -129,6 +130,38 @@ export default function GraphFlowEditor() {
         return () => window.removeEventListener('click', handleClickOutside);
     }, [setSelectedEdgeId, setTooltipPosition]);
 
+
+    const project = useReactFlow().project;
+
+    const handleDrop = useCallback(
+        (event: React.DragEvent) => {
+            event.preventDefault();
+
+            const reactFlowBounds = event.currentTarget.getBoundingClientRect();
+
+
+            const position = project({
+                x: event.clientX - reactFlowBounds.left,
+                y: event.clientY - reactFlowBounds.top,
+            });
+
+            const dragged = useDragStore.getState().draggedEntity;
+            if (!dragged) return;
+
+            const newNode = {
+                id: `${dragged.type}-${Date.now()}`,
+                type: dragged.type,
+                position,
+                data: { label: dragged.name },
+            };
+
+            setNodes((nds) => [...nds, newNode]);
+            useDragStore.getState().clearDraggedEntity();
+        },
+        [setNodes, project]
+    );
+
+
     return (
         <>
             <ReactFlow
@@ -145,7 +178,9 @@ export default function GraphFlowEditor() {
                 fitView
                 deleteKeyCode={['Backspace', 'Delete']}
                 snapToGrid={true}
-                snapGrid={[80, 80]}
+                snapGrid={[40, 40]}
+                onDrop={handleDrop}
+                onDragOver={(event) => event.preventDefault()}
             >
                 <Controls />
                 <Background

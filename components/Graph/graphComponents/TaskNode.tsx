@@ -1,30 +1,36 @@
 'use client';
 
-// import { useCallback } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
 import style from './Node.module.css';
+import EntityIcon from '@/components/Sidebar/buildingBlocks/EntityIcon';
 
-type HubNodeData = {
+type TaskNodeData = {
     label?: string;
 };
 
-function HubNode({ data, isConnectable }: NodeProps<HubNodeData>) {
+function TaskNode({ data, isConnectable }: NodeProps<TaskNodeData>) {
     // const onChange = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
     //     console.log(evt.target.value);
     // }, []);
 
     return (
         <div className={style.node} style={{
-            width: '240px',
-            height: '240px',
-            backgroundColor: '#02AE4F',
+            width: '80px',
+            height: '80px',
+            backgroundColor: '#3b82f6',
             border: '2px solid #1d4ed8',
         }}>
-            <p style={{
-                textAlign: "center"
-            }}>
-                {data?.label || 'Hub'}
-            </p>
+            <div className={style.contents}>
+                <p style={{
+                    textAlign: "center"
+                }}>
+                    {data?.label || 'Event'}
+                </p>
+                <div>
+                    <EntityIcon entity="object" />
+                    <EntityIcon entity="agent" />
+                </div>
+            </div>
             <Handle
                 type="target"
                 position={Position.Top}
@@ -77,4 +83,4 @@ function HubNode({ data, isConnectable }: NodeProps<HubNodeData>) {
     );
 }
 
-export default HubNode;
+export default TaskNode;

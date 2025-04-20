@@ -8,7 +8,7 @@ import {
     EuiFlexGroup,
     EuiFlexItem,
 } from '@elastic/eui';
-import { useModalStore } from '@/stores/modalStore';
+import { useModalStore } from '@/stores/useModalStore';
 import { useEntitiesStore } from '@/stores/useEntitiesStore';
 
 export default function HubOverview() {

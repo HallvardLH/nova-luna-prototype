@@ -2,7 +2,9 @@ import styles from "./EntityAddMenu.module.css";
 import { EntityMap, EntityNames } from "@/app/types/entities";
 import { EuiText, EuiHorizontalRule, EuiButton, EuiButtonIcon } from "@elastic/eui";
 import EntityIcon from "./EntityIcon";
-import { useModalStore, ModalName } from '@/stores/modalStore';
+import { useModalStore, ModalName } from '@/stores/useModalStore';
+import { useDragStore } from "@/stores/useDragStore";
+import { capitalizeFirstLetter } from "@/app/misc/helpers";
 /**
  * Displays a menu containing:
  * All already created entities for a given entity type
@@ -24,7 +26,7 @@ export default function EntityAddMenu({ entity, visible, entities, onClose }: En
     }
 
     const openCreateNew = () => {
-        open("add" + entity.charAt(0).toUpperCase() + entity.slice(1) as ModalName);
+        open("add" + capitalizeFirstLetter(entity) as ModalName);
     }
 
     if (!visible) return null;
@@ -33,7 +35,7 @@ export default function EntityAddMenu({ entity, visible, entities, onClose }: En
         <div className={styles.container}>
             <div className={styles.top}>
                 <EuiText>
-                    {entity.charAt(0).toUpperCase() + entity.slice(1) + "s"}
+                    {capitalizeFirstLetter(entity) + "s"}
                 </EuiText>
                 <EuiButtonIcon onClick={onClose} iconType={"cross"} />
             </div>
@@ -44,10 +46,26 @@ export default function EntityAddMenu({ entity, visible, entities, onClose }: En
             <EuiHorizontalRule style={{ marginBlock: ".5rem" }} />
             <div className={styles.entityInstanceContainer}>
                 {entities.map((entityInstance, index) => (
-                    <div key={index} className={styles.entityInstance}>
+                    <div
+                        key={index}
+                        className={styles.entityInstance}
+                        draggable
+                        onDragStart={(e) => {
+                            e.dataTransfer.setData('application/reactflow', entityInstance.name);
+                            e.dataTransfer.effectAllowed = 'move';
+                            useDragStore.getState().setDraggedEntity({
+                                type: entity,
+                                name: entityInstance.name
+                            });
+                        }}
+                        onDragEnd={() => {
+                            useDragStore.getState().clearDraggedEntity();
+                        }}
+                    >
                         <EntityIcon entity={entity} />
-                        <EuiText >{entityInstance.name}</EuiText>
+                        <EuiText>{entityInstance.name}</EuiText>
                     </div>
+
                 ))}
             </div>
             <EuiHorizontalRule style={{ marginBlock: ".5rem" }} />

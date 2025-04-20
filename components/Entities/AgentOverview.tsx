@@ -6,7 +6,7 @@ import {
     EuiModalFooter,
     EuiButtonEmpty,
 } from '@elastic/eui';
-import { useModalStore } from '@/stores/modalStore';
+import { useModalStore } from '@/stores/useModalStore';
 
 export default function AgentOverview() {
     const isOpen = useModalStore((state) => state.modals.agentOverview);

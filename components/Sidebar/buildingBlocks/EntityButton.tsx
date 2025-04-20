@@ -6,6 +6,7 @@ import { EntityNames, EntityMap } from "@/app/types/entities";
 import EntityAddMenu from "./EntityAddMenu";
 import EntityIcon from "./EntityIcon";
 import { EntitiesState } from "@/stores/useEntitiesStore";
+import { capitalizeFirstLetter } from "@/app/misc/helpers";
 
 interface EntityButtonProps {
     entity: EntityNames;
@@ -35,7 +36,7 @@ export default function EntityButton({ entity }: EntityButtonProps) {
             >
                 <EntityIcon entity={entity} />
                 <EuiText>
-                    {entity.charAt(0).toUpperCase() + entity.slice(1) + "s"}
+                    {capitalizeFirstLetter(entity) + "s"}
                 </EuiText>
             </button>
 

@@ -35,7 +35,7 @@ export type Hub = {
 
 export type EntityMap = {
     agents: Agent[];
-    questEvents: Event[];
+    events: Event[];
     objects: Object[];
     tasks: Task[];
     hubs: Hub[];

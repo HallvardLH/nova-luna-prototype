@@ -1,37 +1,29 @@
 'use client';
 
-// import { useCallback } from 'react';
 import { Handle, Position, NodeProps } from 'reactflow';
 import style from './Node.module.css';
-import EntityIcon from '@/components/Sidebar/buildingBlocks/EntityIcon';
 
 type HubNodeData = {
     label?: string;
 };
 
-function QuestEventNode({ data, isConnectable }: NodeProps<HubNodeData>) {
+function HubNode({ data, isConnectable }: NodeProps<HubNodeData>) {
     // const onChange = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
     //     console.log(evt.target.value);
     // }, []);
 
     return (
         <div className={style.node} style={{
-            width: '80px',
-            height: '80px',
-            backgroundColor: '#3b82f6',
+            width: '160px',
+            height: '160px',
+            backgroundColor: '#02AE4F',
             border: '2px solid #1d4ed8',
         }}>
-            <div className={style.contents}>
-                <p style={{
-                    textAlign: "center"
-                }}>
-                    {data?.label || 'Event'}
-                </p>
-                <div>
-                    <EntityIcon entity="object" />
-                    <EntityIcon entity="agent" />
-                </div>
-            </div>
+            <p style={{
+                textAlign: "center"
+            }}>
+                {data?.label || 'Hub'}
+            </p>
             <Handle
                 type="target"
                 position={Position.Top}
@@ -84,4 +76,4 @@ function QuestEventNode({ data, isConnectable }: NodeProps<HubNodeData>) {
     );
 }
 
-export default QuestEventNode;
+export default HubNode;

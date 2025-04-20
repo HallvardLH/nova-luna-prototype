@@ -3,12 +3,12 @@
  * Provides methods to open, close, toggle, and check the state of specific modals,
  * as well as a method to close all modals at once.
  *
- * @module modalStore
+ * @module useModalStore
  */
 
 import { create } from 'zustand';
 
-export type ModalName = 'agentOverview' | 'eventOverview' | 'hubOverview' | 'objectOverview' | 'taskOverview' | "addHub";
+export type ModalName = 'agentOverview' | 'eventOverview' | 'hubOverview' | 'objectOverview' | 'taskOverview' | "addHub" | "addAgent" | "addEvent" | "addObject" | "addTask";
 
 type ModalStore = {
     /**
@@ -62,6 +62,11 @@ export const useModalStore = create<ModalStore>((set, get) => ({
         taskOverview: false,
 
         addHub: false,
+        addAgent: false,
+        addEvent: false,
+        addObject: false,
+        addTask: false,
+
     },
     open: (modal) => set((state) => ({ modals: { ...state.modals, [modal]: true } })),
     close: (modal) => set((state) => ({ modals: { ...state.modals, [modal]: false } })),
