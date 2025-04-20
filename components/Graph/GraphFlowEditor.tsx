@@ -19,6 +19,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import HubNode from './graphComponents/HubNode';
 import TaskNode from './graphComponents/TaskNode';
+import CustomEdge from './graphComponents/CustomEdge';
 import DeleteEdgeTooltip from './tooltips/DeleteEdgeTooltip';
 import { useGraphStore } from '@/stores/useGraphStore';
 import { useDragStore } from '@/stores/useDragStore';
@@ -26,6 +27,7 @@ import { useDragStore } from '@/stores/useDragStore';
 // We define node types here to avoid having to memoize in the component
 const nodeTypes = { hub: HubNode, task: TaskNode };
 
+const edgeTypes = { custom: CustomEdge };
 
 /**
  * GraphFlowEditor renders an interactive node-based editor using React Flow. It supports:
@@ -52,6 +54,8 @@ export default function GraphFlowEditor() {
 
     const edgeType = useGraphStore((state) => state.edgeType);
     const setEdgeType = useGraphStore((state) => state.setEdgeType);
+
+    const edgeStyle = useGraphStore((state) => state.edgeStyle);
 
     const selectedEdgeId = useGraphStore((state) => state.selectedEdgeId);
     const setSelectedEdgeId = useGraphStore((state) => state.setSelectedEdgeId);
@@ -89,9 +93,11 @@ export default function GraphFlowEditor() {
     const onConnect = useCallback(
         (connection: Edge | Connection) => setEdges((eds) => addEdge({
             ...connection,
-            type: edgeType,
+            // type: edgeType,
+            type: 'custom',
+            data: edgeStyle,
         }, eds)),
-        [edgeType, setEdges]
+        [edgeStyle, setEdges]
     );
 
     /**
@@ -172,6 +178,7 @@ export default function GraphFlowEditor() {
                 onConnect={onConnect}
                 onEdgeClick={onEdgeClick}
                 nodeTypes={nodeTypes}
+                edgeTypes={edgeTypes}
                 defaultEdgeOptions={{
                     type: edgeType,
                 }}

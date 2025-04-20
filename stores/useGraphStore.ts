@@ -4,6 +4,12 @@ import { Node, Edge } from 'reactflow';
 
 type TooltipPosition = { x: number; y: number } | null;
 
+type EdgeStyle = {
+    stroke: string;
+    strokeWidth: number;
+    strokeDasharray?: string;
+};
+
 type GraphState = {
     nodes: Node[];
     edges: Edge[];
@@ -14,6 +20,9 @@ type GraphState = {
 
     edgeType: 'default' | 'straight' | 'step' | 'smoothstep';
     setEdgeType: (type: GraphState['edgeType']) => void;
+
+    edgeStyle: EdgeStyle;
+    setEdgeStyle: (style: Partial<EdgeStyle>) => void;
 
     selectedEdgeId: string | null;
     setSelectedEdgeId: (id: string | null) => void;
@@ -48,6 +57,19 @@ export const useGraphStore = create<GraphState>()(
             edgeType: 'default',
             setEdgeType: (type) => set({ edgeType: type }),
 
+            edgeStyle: {
+                stroke: '#000000',
+                strokeWidth: 2,
+                strokeDasharray: '',
+            },
+            setEdgeStyle: (style) =>
+                set((state) => ({
+                    edgeStyle: {
+                        ...state.edgeStyle,
+                        ...style,
+                    },
+                })),
+
             selectedEdgeId: null,
             setSelectedEdgeId: (id) => set({ selectedEdgeId: id }),
 
@@ -61,6 +83,7 @@ export const useGraphStore = create<GraphState>()(
                 nodes: state.nodes,
                 edges: state.edges,
                 edgeType: state.edgeType,
+                edgeStyle: state.edgeStyle,
             }),
         }
     )

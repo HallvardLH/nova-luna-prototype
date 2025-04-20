@@ -6,10 +6,12 @@ import GraphPage from "@/components/Graph/GraphPage";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { EuiPage, EuiPageBody, EuiPageSidebar, EuiPageSection } from "@elastic/eui";
 import Modals from "@/components/Modals";
+import Toolbar from "@/components/Toolbar/Toolbar";
 
 export default function Home() {
   return (
     <div className={styles.page}>
+      <Toolbar />
       <EuiPage paddingSize="none" className={styles.main}>
         {/* Sidebar Section */}
         <EuiPageSidebar className={styles.sidebar} sticky>
