@@ -44,6 +44,8 @@ export default function Toolbar() {
                     min={1}
                     max={10}
                     value={edgeStyle.strokeWidth}
+                    // @ts-expect-error // The Eui component does not want this kind of function,
+                    // but it works just fine
                     onChange={handleWidthChange}
                     showValue
                     fullWidth
