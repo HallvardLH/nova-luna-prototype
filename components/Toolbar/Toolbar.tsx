@@ -35,8 +35,19 @@ export default function Toolbar() {
 
     return (
         <EuiPanel
-            paddingSize="m"
-            style={{ width: 240, position: 'absolute', bottom: 10, left: "50%", zIndex: 10 }}
+            hasShadow
+            borderRadius="m"
+            paddingSize="s"
+            style={{
+                position: 'fixed',
+                bottom: 16,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 1000,
+                display: 'flex',
+                gap: '8px',
+                alignItems: 'center',
+            }}
         >
             <EuiFormRow label="Edge Color">
 
