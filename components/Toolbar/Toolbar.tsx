@@ -1,14 +1,21 @@
-'use client';
+// 'use client';
 
 import React from 'react';
 import {
     EuiPanel,
     EuiFormRow,
-    EuiColorPicker,
+    // EuiColorPicker,
     EuiRange,
     EuiSelect,
 } from '@elastic/eui';
 import { useGraphStore } from '@/stores/useGraphStore';
+
+// Dynamic importing for the EuiColorPicker to avoid SSR issues
+import dynamic from "next/dynamic";
+const ColorPicker = dynamic(() => import("./ColorPickerWrapper"), {
+    ssr: false,
+});
+
 
 export default function Toolbar() {
     const edgeStyle = useGraphStore((state) => state.edgeStyle);
@@ -32,10 +39,11 @@ export default function Toolbar() {
             style={{ width: 240, position: 'absolute', bottom: 10, left: "50%", zIndex: 10 }}
         >
             <EuiFormRow label="Edge Color">
-                <EuiColorPicker
+
+                <ColorPicker
                     color={edgeStyle.stroke}
                     onChange={handleColorChange}
-                    fullWidth
+                // fullWidth
                 />
             </EuiFormRow>
 
