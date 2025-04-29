@@ -23,6 +23,7 @@ export interface EntitiesState extends EntityMap {
     };
 }
 
+
 // Create store with only data persisted
 export const useEntitiesStore = create<EntitiesState>()(
     persist(
