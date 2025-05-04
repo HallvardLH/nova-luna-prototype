@@ -19,5 +19,5 @@ interface EuiWrapperProps {
  * @returns A JSX element that wraps children in an EuiProvider.
  */
 export function EuiWrapper({ children }: EuiWrapperProps) {
-    return <EuiProvider>{children}</EuiProvider>;
+    return <EuiProvider colorMode='light'>{children}</EuiProvider>;
 }

@@ -30,10 +30,11 @@ export default function Sidebar() {
             </div>
             <EuiHorizontalRule />
             <div className={styles.buildingBlocksContainer}>
-                <EntityButton entity="agent" />
                 <EntityButton entity="hub" />
                 <EntityButton entity="task" />
                 <EntityButton entity="event" />
+                <EuiHorizontalRule />
+                <EntityButton entity="agent" />
                 <EntityButton entity="object" />
                 <EuiHorizontalRule />
                 {/* <EuiFieldSearch

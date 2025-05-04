@@ -1,0 +1,32 @@
+.container {
+    background-color: white;
+    z-index: 10;
+    border-right: 1px solid #ccc;
+}
+
+.linkList {
+    padding: 2rem;
+    list-style-type: decimal;
+    padding-left: 2rem;
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.linkList a {
+    font-size: 1.2rem;
+}
+
+.active {
+    color: black;
+    text-decoration: underline;
+}
+
+.top {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 2rem;
+    padding-bottom: 0;
+}

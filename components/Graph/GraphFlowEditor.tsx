@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, ChangeEvent } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ReactFlow, {
     Background,
     Controls,
@@ -9,9 +9,8 @@ import ReactFlow, {
     applyNodeChanges,
     Connection,
     Edge,
-    // Node,
+    Node,
     useReactFlow,
-    Panel,
     BackgroundVariant,
     NodeChange,
     EdgeChange
@@ -53,7 +52,7 @@ export default function GraphFlowEditor() {
     const initializeGraph = useGraphStore((state) => state.initializeGraph);
 
     const edgeType = useGraphStore((state) => state.edgeType);
-    const setEdgeType = useGraphStore((state) => state.setEdgeType);
+    // const setEdgeType = useGraphStore((state) => state.setEdgeType);
 
     const edgeStyle = useGraphStore((state) => state.edgeStyle);
 
@@ -99,6 +98,16 @@ export default function GraphFlowEditor() {
         }, eds)),
         [edgeStyle, setEdges]
     );
+
+    const onNodeClick = useCallback(
+        (event: React.MouseEvent, node: Node) => {
+            event.stopPropagation();
+            console.log(node.id)
+            // setSelectedEdgeId(null);
+            setTooltipPosition({ x: event.clientX, y: event.clientY });
+        },
+        [setSelectedEdgeId, setTooltipPosition]
+    )
 
     /**
     * Handles selecting an edge by clicking on it.
@@ -177,6 +186,7 @@ export default function GraphFlowEditor() {
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
                 onEdgeClick={onEdgeClick}
+                onNodeClick={onNodeClick}
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
                 defaultEdgeOptions={{
@@ -193,11 +203,12 @@ export default function GraphFlowEditor() {
                 <Background
                     variant={BackgroundVariant.Lines}
                     gap={80}
+                    style={{ backgroundColor: '#f0f0f0' }}
                 />
 
                 {/* Edge type selector UI */}
                 {/* Not here to stay */}
-                <Panel position="top-left">
+                {/* <Panel position="top-left">
                     <div style={{
                         background: 'white',
                         padding: '10px',
@@ -220,7 +231,7 @@ export default function GraphFlowEditor() {
                             <option value="smoothstep">Smooth Stepped</option>
                         </select>
                     </div>
-                </Panel>
+                </Panel> */}
             </ReactFlow>
 
             {/* Tooltip for deleting selected edge */}
