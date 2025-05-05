@@ -10,6 +10,13 @@ type EdgeStyle = {
     strokeDasharray?: string;
 };
 
+type TaskNodeData = {
+    label?: string;
+    objects?: string[];
+    agents?: string[];
+};
+
+
 type GraphState = {
     nodes: Node[];
     edges: Edge[];
@@ -17,6 +24,9 @@ type GraphState = {
     setEdges: (updater: Edge[] | ((prev: Edge[]) => Edge[])) => void;
 
     initializeGraph: () => Promise<void>;
+
+    updateNodeData: (id: string, updater: (data: TaskNodeData) => TaskNodeData) => void;
+
 
     edgeType: 'default' | 'straight' | 'step' | 'smoothstep';
     setEdgeType: (type: GraphState['edgeType']) => void;
@@ -29,6 +39,9 @@ type GraphState = {
 
     tooltipPosition: TooltipPosition;
     setTooltipPosition: (pos: TooltipPosition) => void;
+
+    selectedNodeId: string | null;
+    setSelectedNodeId: (id: string | null) => void;
 };
 
 const STORAGE_KEY = 'graph-flow-data';
@@ -54,6 +67,18 @@ export const useGraphStore = create<GraphState>()(
                 const data = await res.json();
                 set({ nodes: data.nodes, edges: data.edges });
             },
+            updateNodeData: (id: string, updater: (data: TaskNodeData) => TaskNodeData) =>
+                set((state) => ({
+                    nodes: state.nodes.map((node) =>
+                        node.id === id
+                            ? {
+                                ...node,
+                                data: updater(node.data as TaskNodeData),
+                            }
+                            : node
+                    ),
+                })),
+
             edgeType: 'default',
             setEdgeType: (type) => set({ edgeType: type }),
 
@@ -75,6 +100,9 @@ export const useGraphStore = create<GraphState>()(
 
             tooltipPosition: null,
             setTooltipPosition: (pos) => set({ tooltipPosition: pos }),
+
+            selectedNodeId: null,
+            setSelectedNodeId: (id) => set({ selectedNodeId: id }),
         }),
         {
             name: STORAGE_KEY,

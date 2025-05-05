@@ -9,6 +9,7 @@ import AddAgent from './Entities/AddAgent';
 import AddObject from './Entities/AddObject';
 import AddEvent from './Entities/AddEvent';
 import AddTask from './Entities/AddTask';
+import EditNodeModal from './Graph/graphComponents/EditNodeModal';
 
 export default function Modals() {
     return (
@@ -22,6 +23,8 @@ export default function Modals() {
             <AddObject />
             <AddEvent />
             <AddTask />
+
+            <EditNodeModal />
         </>
     );
 }

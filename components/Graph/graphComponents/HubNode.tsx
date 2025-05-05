@@ -16,7 +16,7 @@ function HubNode({ data, isConnectable }: NodeProps<HubNodeData>) {
         <div className={style.node} style={{
             width: '320px',
             height: '320px',
-            backgroundColor: '#02AE4F',
+            backgroundColor: '#71bb6c',
             border: '2px solid #1d4ed8',
         }}>
             <p style={{

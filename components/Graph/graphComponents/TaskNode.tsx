@@ -3,7 +3,9 @@
 import { Handle, Position, NodeProps } from 'reactflow';
 import style from './Node.module.css';
 import EntityIcon from '@/components/Sidebar/buildingBlocks/EntityIcon';
-import { EuiButton } from '@elastic/eui';
+import { useModalStore } from '@/stores/useModalStore';
+import { useGraphStore } from '@/stores/useGraphStore';
+import { useEntitiesStore } from '@/stores/useEntitiesStore';
 
 type TaskNodeData = {
     label?: string;
@@ -11,16 +13,31 @@ type TaskNodeData = {
     agents?: string[];
 };
 
-function TaskNode({ data, isConnectable }: NodeProps<TaskNodeData>) {
+export default function TaskNode({ id, data, isConnectable }: NodeProps<TaskNodeData>) {
     const { label = 'Event', objects = [], agents = [] } = data;
+
+    const open = useModalStore((state) => state.open);
+    const setSelectedNodeId = useGraphStore((state) => state.setSelectedNodeId);
+
+    const allAgents = useEntitiesStore((state) => state.agents);
+    const allObjects = useEntitiesStore((state) => state.objects);
+
+    const agentEntities = agents.map((id) => allAgents.find((a) => a.id === id)).filter(Boolean);
+    const objectEntities = objects.map((id) => allObjects.find((o) => o.id === id)).filter(Boolean);
+
+    const handleDoubleClick = () => {
+        open('editNode');
+        setSelectedNodeId(id);
+    };
 
     return (
         <div
             className={style.node}
+            onDoubleClick={handleDoubleClick}
             style={{
                 width: '160px',
                 height: '160px',
-                backgroundColor: '#3b82f6',
+                backgroundColor: '#5b9ec2',
                 border: '2px solid #1d4ed8',
             }}
         >
@@ -42,17 +59,15 @@ function TaskNode({ data, isConnectable }: NodeProps<TaskNodeData>) {
                         justifyContent: 'center',
                     }}
                 >
-                    {objects.map((_, index) => (
-                        <EntityIcon key={`object-${index}`} size={32} entity="object" />
+                    {objectEntities.map((object, index) => (
+                        <EntityIcon key={`object-${object?.id ?? index}`} size={32} entity="object" />
                     ))}
-                    {agents.map((_, index) => (
-                        <EntityIcon key={`agent-${index}`} size={32} entity="agent" />
+                    {agentEntities.map((agent, index) => (
+                        <EntityIcon key={`agent-${agent?.id ?? index}`} size={32} entity="agent" />
                     ))}
                 </div>
-
             </div>
 
-            {/* Handles */}
             {['Top', 'Bottom', 'Left', 'Right'].flatMap((position) => [
                 <Handle
                     key={`${position.toLowerCase()}-target`}
@@ -72,5 +87,3 @@ function TaskNode({ data, isConnectable }: NodeProps<TaskNodeData>) {
         </div>
     );
 }
-
-export default TaskNode;
