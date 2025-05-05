@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ReactFlow, {
     Background,
     Controls,
@@ -13,7 +13,8 @@ import ReactFlow, {
     useReactFlow,
     BackgroundVariant,
     NodeChange,
-    EdgeChange
+    EdgeChange,
+    OnSelectionChangeParams
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import HubNode from './graphComponents/HubNode';
@@ -23,26 +24,10 @@ import DeleteEdgeTooltip from './tooltips/DeleteEdgeTooltip';
 import { useGraphStore } from '@/stores/useGraphStore';
 import { useDragStore } from '@/stores/useDragStore';
 
-// We define node types here to avoid having to memoize in the component
 const nodeTypes = { hub: HubNode, task: TaskNode };
-
 const edgeTypes = { custom: CustomEdge };
 
-/**
- * GraphFlowEditor renders an interactive node-based editor using React Flow. It supports:
- * - Custom node types (Hub and Task)
- * - Creating, editing, deleting edges and nodes
- * - Selecting edge type (curved, straight, stepped, etc.)
- * - Persisting graph data to localStorage
- * - Loading initial data from a static JSON file if localStorage is empty
- * - Tooltip to delete selected edges
- */
 export default function GraphFlowEditor() {
-
-    // const [nodes, setNodes] = useState<Node[]>([]);
-    // const [edges, setEdges] = useState<Edge[]>([]);
-    // const { fitView } = useReactFlow();
-
     const nodes = useGraphStore((state) => state.nodes);
     const setNodes = useGraphStore((state) => state.setNodes);
 
@@ -50,10 +35,7 @@ export default function GraphFlowEditor() {
     const setEdges = useGraphStore((state) => state.setEdges);
 
     const initializeGraph = useGraphStore((state) => state.initializeGraph);
-
     const edgeType = useGraphStore((state) => state.edgeType);
-    // const setEdgeType = useGraphStore((state) => state.setEdgeType);
-
     const edgeStyle = useGraphStore((state) => state.edgeStyle);
 
     const selectedEdgeId = useGraphStore((state) => state.selectedEdgeId);
@@ -62,57 +44,46 @@ export default function GraphFlowEditor() {
     const tooltipPosition = useGraphStore((state) => state.tooltipPosition);
     const setTooltipPosition = useGraphStore((state) => state.setTooltipPosition);
 
+    const [selectedNodeIds, setSelectedNodeIds] = useState<string[]>([]);
+    const project = useReactFlow().project;
 
     useEffect(() => {
         initializeGraph();
     }, [initializeGraph]);
 
-    /**
-    * Handles changes to nodes (e.g. dragging, updating labels).
-    */
     const onNodesChange = useCallback(
         (changes: NodeChange[]) => setNodes((nds) => applyNodeChanges(changes, nds)),
         [setNodes]
     );
 
-    /**
-    * Handles changes to edges (e.g. repositioning).
-    */
     const onEdgesChange = useCallback(
         (changes: EdgeChange[]) => setEdges((eds) => applyEdgeChanges(changes, eds)),
         [setEdges]
     );
 
-    /**
-    * Handles creating a new connection between nodes with the selected edge type.
-    * Edge type is selected by the user.
-    * TODO: add proper UI for selecting edge type
-    * TODO: let user change type of existing edge
-    */
     const onConnect = useCallback(
-        (connection: Edge | Connection) => setEdges((eds) => addEdge({
-            ...connection,
-            // type: edgeType,
-            type: 'custom',
-            data: edgeStyle,
-        }, eds)),
+        (connection: Edge | Connection) =>
+            setEdges((eds) =>
+                addEdge(
+                    {
+                        ...connection,
+                        type: 'custom',
+                        data: edgeStyle,
+                    },
+                    eds
+                )
+            ),
         [edgeStyle, setEdges]
     );
 
     const onNodeClick = useCallback(
         (event: React.MouseEvent, node: Node) => {
             event.stopPropagation();
-            console.log(node.id)
-            // setSelectedEdgeId(null);
             setTooltipPosition({ x: event.clientX, y: event.clientY });
         },
-        [setSelectedEdgeId, setTooltipPosition]
-    )
+        [setTooltipPosition]
+    );
 
-    /**
-    * Handles selecting an edge by clicking on it.
-    * Shows a tooltip with delete option near the cursor.
-    */
     const onEdgeClick = useCallback(
         (event: React.MouseEvent, edge: Edge) => {
             event.stopPropagation();
@@ -122,9 +93,6 @@ export default function GraphFlowEditor() {
         [setSelectedEdgeId, setTooltipPosition]
     );
 
-    /**
-    * Deletes the currently selected edge from the graph.
-    */
     const deleteSelectedEdge = useCallback(() => {
         if (selectedEdgeId) {
             setEdges((eds) => eds.filter((e) => e.id !== selectedEdgeId));
@@ -133,9 +101,28 @@ export default function GraphFlowEditor() {
         }
     }, [selectedEdgeId, setSelectedEdgeId, setTooltipPosition, setEdges]);
 
-    /**
-    * Deselects the edge and hides the tooltip if a click occurs outside it.
-    */
+    const deleteSelectedNodes = useCallback(() => {
+        if (selectedNodeIds.length > 0) {
+            setNodes((nds) => nds.filter((node) => !selectedNodeIds.includes(node.id)));
+            setEdges((eds) =>
+                eds.filter((edge) => !selectedNodeIds.includes(edge.source) && !selectedNodeIds.includes(edge.target))
+            );
+            setSelectedNodeIds([]);
+        }
+    }, [selectedNodeIds, setNodes, setEdges]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Backspace' || event.key === 'Delete') {
+                deleteSelectedEdge();
+                deleteSelectedNodes();
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [deleteSelectedEdge, deleteSelectedNodes]);
+
     useEffect(() => {
         const handleClickOutside = () => {
             setSelectedEdgeId(null);
@@ -145,15 +132,11 @@ export default function GraphFlowEditor() {
         return () => window.removeEventListener('click', handleClickOutside);
     }, [setSelectedEdgeId, setTooltipPosition]);
 
-
-    const project = useReactFlow().project;
-
     const handleDrop = useCallback(
         (event: React.DragEvent) => {
             event.preventDefault();
 
             const reactFlowBounds = event.currentTarget.getBoundingClientRect();
-
 
             const position = project({
                 x: event.clientX - reactFlowBounds.left,
@@ -176,6 +159,12 @@ export default function GraphFlowEditor() {
         [setNodes, project]
     );
 
+    const onSelectionChange = useCallback(
+        ({ nodes }: OnSelectionChangeParams) => {
+            setSelectedNodeIds(nodes?.map((n) => n.id) || []);
+        },
+        []
+    );
 
     return (
         <>
@@ -187,54 +176,27 @@ export default function GraphFlowEditor() {
                 onConnect={onConnect}
                 onEdgeClick={onEdgeClick}
                 onNodeClick={onNodeClick}
+                onSelectionChange={onSelectionChange}
                 nodeTypes={nodeTypes}
                 edgeTypes={edgeTypes}
-                defaultEdgeOptions={{
-                    type: edgeType,
-                }}
+                defaultEdgeOptions={{ type: edgeType }}
                 fitView
                 deleteKeyCode={['Backspace', 'Delete']}
                 snapToGrid={true}
                 snapGrid={[40, 40]}
                 onDrop={handleDrop}
                 onDragOver={(event) => event.preventDefault()}
+                minZoom={0.1}
             >
                 <Controls />
                 <Background
-                    variant={BackgroundVariant.Lines}
+                    variant={BackgroundVariant.Cross}
                     gap={80}
-                    style={{ backgroundColor: '#f0f0f0' }}
+                    style={{ backgroundColor: '#F4EEEE' }}
+                    color="#b4b2b2"
                 />
-
-                {/* Edge type selector UI */}
-                {/* Not here to stay */}
-                {/* <Panel position="top-left">
-                    <div style={{
-                        background: 'white',
-                        padding: '10px',
-                        borderRadius: '5px',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                    }}>
-                        <label style={{ display: 'block', marginBottom: '5px' }}>
-                            Edge Type:
-                        </label>
-
-                        <select
-                            value={edgeType}
-                            onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-                                setEdgeType(e.target.value as 'default' | 'straight' | 'step' | 'smoothstep')
-                            }
-                        >
-                            <option value="default">Curved (Bezier)</option>
-                            <option value="straight">Straight</option>
-                            <option value="step">Stepped</option>
-                            <option value="smoothstep">Smooth Stepped</option>
-                        </select>
-                    </div>
-                </Panel> */}
             </ReactFlow>
 
-            {/* Tooltip for deleting selected edge */}
             {selectedEdgeId && tooltipPosition && (
                 <DeleteEdgeTooltip
                     x={tooltipPosition.x}
@@ -242,7 +204,6 @@ export default function GraphFlowEditor() {
                     onDelete={deleteSelectedEdge}
                 />
             )}
-
         </>
     );
 }

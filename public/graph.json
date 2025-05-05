@@ -4,7 +4,8 @@
             "id": "hub-1",
             "type": "hub",
             "data": {
-                "label": "Home Base"
+                "label": "Chrono Nexus",
+                "description": "Central hub connecting all timelines."
             },
             "position": {
                 "x": 0,
@@ -15,59 +16,320 @@
             "id": "event-1",
             "type": "task",
             "data": {
-                "label": "Wake Up",
+                "label": "Activate Time Core",
                 "occupants": [
-                    "Object",
-                    "Agent"
+                    "Chrono Engineer",
+                    "AI Assistant"
                 ]
             },
             "position": {
-                "x": 240,
-                "y": 240
+                "x": 200,
+                "y": 0
             }
         },
         {
             "id": "event-2",
             "type": "task",
             "data": {
-                "label": "Stretch and Get Ready"
+                "label": "Calibrate Temporal Coordinates",
+                "occupants": [
+                    "Chrono Engineer"
+                ]
             },
             "position": {
-                "x": 480,
-                "y": 240
+                "x": 400,
+                "y": 0
             }
         },
         {
             "id": "event-3",
             "type": "task",
             "data": {
-                "label": "Eat Breakfast"
+                "label": "Initiate Time Jump",
+                "occupants": [
+                    "Chrono Engineer"
+                ]
             },
             "position": {
-                "x": 720,
-                "y": 240
+                "x": 600,
+                "y": 0
+            }
+        },
+        {
+            "id": "hub-2",
+            "type": "hub",
+            "data": {
+                "label": "Ancient Egypt - 1300 BC",
+                "description": "Arrival point in Ancient Egypt."
+            },
+            "position": {
+                "x": 800,
+                "y": 0
+            }
+        },
+        {
+            "id": "event-4",
+            "type": "task",
+            "data": {
+                "label": "Meet Pharaoh's Advisor",
+                "occupants": [
+                    "Pharaoh's Advisor"
+                ]
+            },
+            "position": {
+                "x": 1000,
+                "y": -100
+            }
+        },
+        {
+            "id": "event-5",
+            "type": "task",
+            "data": {
+                "label": "Decode Hieroglyphics",
+                "occupants": [
+                    "Scribe"
+                ]
+            },
+            "position": {
+                "x": 1200,
+                "y": -100
+            }
+        },
+        {
+            "id": "event-6",
+            "type": "task",
+            "data": {
+                "label": "Prevent Tomb Robbery",
+                "occupants": [
+                    "Guard",
+                    "Thief"
+                ]
+            },
+            "position": {
+                "x": 1400,
+                "y": -100
+            }
+        },
+        {
+            "id": "hub-3",
+            "type": "hub",
+            "data": {
+                "label": "Renaissance Italy - 1500 AD",
+                "description": "Arrival point in Renaissance Italy."
+            },
+            "position": {
+                "x": 1600,
+                "y": -100
+            }
+        },
+        {
+            "id": "event-7",
+            "type": "task",
+            "data": {
+                "label": "Assist Leonardo da Vinci",
+                "occupants": [
+                    "Leonardo da Vinci"
+                ]
+            },
+            "position": {
+                "x": 1800,
+                "y": 0
+            }
+        },
+        {
+            "id": "event-8",
+            "type": "task",
+            "data": {
+                "label": "Retrieve Stolen Manuscript",
+                "occupants": [
+                    "Thief",
+                    "Guard"
+                ]
+            },
+            "position": {
+                "x": 2000,
+                "y": 0
+            }
+        },
+        {
+            "id": "event-9",
+            "type": "task",
+            "data": {
+                "label": "Attend Secret Symposium",
+                "occupants": [
+                    "Scholar",
+                    "Spy"
+                ]
+            },
+            "position": {
+                "x": 2200,
+                "y": 0
+            }
+        },
+        {
+            "id": "hub-4",
+            "type": "hub",
+            "data": {
+                "label": "Future Mars Colony - 2200 AD",
+                "description": "Arrival point in Future Mars Colony."
+            },
+            "position": {
+                "x": 2400,
+                "y": 0
+            }
+        },
+        {
+            "id": "event-10",
+            "type": "task",
+            "data": {
+                "label": "Investigate AI Malfunction",
+                "occupants": [
+                    "AI Technician",
+                    "AI Unit"
+                ]
+            },
+            "position": {
+                "x": 2600,
+                "y": 100
+            }
+        },
+        {
+            "id": "event-11",
+            "type": "task",
+            "data": {
+                "label": "Repair Life Support Systems",
+                "occupants": [
+                    "Engineer"
+                ]
+            },
+            "position": {
+                "x": 2800,
+                "y": 100
+            }
+        },
+        {
+            "id": "event-12",
+            "type": "task",
+            "data": {
+                "label": "Negotiate with Martian Settlers",
+                "occupants": [
+                    "Diplomat",
+                    "Settler Leader"
+                ]
+            },
+            "position": {
+                "x": 3000,
+                "y": 100
+            }
+        },
+        {
+            "id": "hub-5",
+            "type": "hub",
+            "data": {
+                "label": "Chrono Nexus",
+                "description": "Return to central hub."
+            },
+            "position": {
+                "x": 3200,
+                "y": 0
             }
         }
     ],
     "edges": [
         {
-            "id": "e1-2",
+            "id": "e1",
+            "source": "hub-1",
+            "target": "event-1",
+            "type": "straight"
+        },
+        {
+            "id": "e2",
             "source": "event-1",
             "target": "event-2",
             "type": "straight"
         },
         {
-            "id": "e2-3",
+            "id": "e3",
             "source": "event-2",
             "target": "event-3",
             "type": "straight"
         },
         {
-            "id": "e3-hub",
-            "source": "hub-1",
-            "sourceHandle": "right-source",
-            "target": "event-1",
-            "targetHandle": "left-target",
+            "id": "e4",
+            "source": "event-3",
+            "target": "hub-2",
+            "type": "straight"
+        },
+        {
+            "id": "e5",
+            "source": "hub-2",
+            "target": "event-4",
+            "type": "straight"
+        },
+        {
+            "id": "e6",
+            "source": "event-4",
+            "target": "event-5",
+            "type": "straight"
+        },
+        {
+            "id": "e7",
+            "source": "event-5",
+            "target": "event-6",
+            "type": "straight"
+        },
+        {
+            "id": "e8",
+            "source": "event-6",
+            "target": "hub-3",
+            "type": "straight"
+        },
+        {
+            "id": "e9",
+            "source": "hub-3",
+            "target": "event-7",
+            "type": "straight"
+        },
+        {
+            "id": "e10",
+            "source": "event-7",
+            "target": "event-8",
+            "type": "straight"
+        },
+        {
+            "id": "e11",
+            "source": "event-8",
+            "target": "event-9",
+            "type": "straight"
+        },
+        {
+            "id": "e12",
+            "source": "event-9",
+            "target": "hub-4",
+            "type": "straight"
+        },
+        {
+            "id": "e13",
+            "source": "hub-4",
+            "target": "event-10",
+            "type": "straight"
+        },
+        {
+            "id": "e14",
+            "source": "event-10",
+            "target": "event-11",
+            "type": "straight"
+        },
+        {
+            "id": "e15",
+            "source": "event-11",
+            "target": "event-12",
+            "type": "straight"
+        },
+        {
+            "id": "e16",
+            "source": "event-12",
+            "target": "hub-5",
             "type": "straight"
         }
     ]

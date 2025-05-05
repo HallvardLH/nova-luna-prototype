@@ -3,82 +3,72 @@
 import { Handle, Position, NodeProps } from 'reactflow';
 import style from './Node.module.css';
 import EntityIcon from '@/components/Sidebar/buildingBlocks/EntityIcon';
+import { EuiButton } from '@elastic/eui';
 
 type TaskNodeData = {
     label?: string;
+    objects?: string[];
+    agents?: string[];
 };
 
 function TaskNode({ data, isConnectable }: NodeProps<TaskNodeData>) {
-    // const onChange = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
-    //     console.log(evt.target.value);
-    // }, []);
+    const { label = 'Event', objects = [], agents = [] } = data;
 
     return (
-        <div className={style.node} style={{
-            width: '80px',
-            height: '80px',
-            backgroundColor: '#3b82f6',
-            border: '2px solid #1d4ed8',
-        }}>
+        <div
+            className={style.node}
+            style={{
+                width: '160px',
+                height: '160px',
+                backgroundColor: '#3b82f6',
+                border: '2px solid #1d4ed8',
+            }}
+        >
             <div className={style.contents}>
-                <p style={{
-                    textAlign: "center"
-                }}>
-                    {data?.label || 'Event'}
+                <p
+                    style={{
+                        textAlign: 'center',
+                        fontSize: '1.4rem',
+                    }}
+                >
+                    {label}
                 </p>
-                <div>
-                    <EntityIcon entity="object" />
-                    <EntityIcon entity="agent" />
+                <br />
+                <div
+                    style={{
+                        display: 'flex',
+                        gap: '0.5rem',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                    }}
+                >
+                    {objects.map((_, index) => (
+                        <EntityIcon key={`object-${index}`} size={32} entity="object" />
+                    ))}
+                    {agents.map((_, index) => (
+                        <EntityIcon key={`agent-${index}`} size={32} entity="agent" />
+                    ))}
                 </div>
+
             </div>
-            <Handle
-                type="target"
-                position={Position.Top}
-                id="top-target"
-                isConnectable={isConnectable}
-            />
-            <Handle
-                type="source"
-                position={Position.Top}
-                id="top-source"
-                isConnectable={isConnectable}
-            />
-            <Handle
-                type="target"
-                position={Position.Bottom}
-                id="bottom-target"
-                isConnectable={isConnectable}
-            />
-            <Handle
-                type="source"
-                position={Position.Bottom}
-                id="bottom-source"
-                isConnectable={isConnectable}
-            />
-            <Handle
-                type="target"
-                position={Position.Right}
-                id="right-target"
-                isConnectable={isConnectable}
-            />
-            <Handle
-                type="source"
-                position={Position.Right}
-                id="right-source"
-                isConnectable={isConnectable}
-            />
-            <Handle
-                type="target"
-                position={Position.Left}
-                id="left-target"
-                isConnectable={isConnectable}
-            />
-            <Handle
-                type="source"
-                position={Position.Left}
-                id="left-source"
-                isConnectable={isConnectable}
-            />
+
+            {/* Handles */}
+            {['Top', 'Bottom', 'Left', 'Right'].flatMap((position) => [
+                <Handle
+                    key={`${position.toLowerCase()}-target`}
+                    type="target"
+                    position={Position[position as keyof typeof Position]}
+                    id={`${position.toLowerCase()}-target`}
+                    isConnectable={isConnectable}
+                />,
+                <Handle
+                    key={`${position.toLowerCase()}-source`}
+                    type="source"
+                    position={Position[position as keyof typeof Position]}
+                    id={`${position.toLowerCase()}-source`}
+                    isConnectable={isConnectable}
+                />,
+            ])}
         </div>
     );
 }
