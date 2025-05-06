@@ -16,12 +16,13 @@ function HubNode({ data, isConnectable }: NodeProps<HubNodeData>) {
         <div className={style.node} style={{
             width: '320px',
             height: '320px',
-            backgroundColor: '#71bb6c',
-            border: '2px solid #1d4ed8',
+            backgroundColor: '#ECF1F9',
+            border: '20px solid #71bb6c',
         }}>
             <p style={{
                 textAlign: "center",
-                fontSize: "1.4rem"
+                fontSize: "2.5rem",
+                color: "#696969",
             }}>
                 {data?.label || 'Hub'}
             </p>

@@ -35,10 +35,10 @@ export default function TaskNode({ id, data, isConnectable }: NodeProps<TaskNode
             className={style.node}
             onDoubleClick={handleDoubleClick}
             style={{
-                width: '160px',
-                height: '160px',
-                backgroundColor: '#5b9ec2',
-                border: '2px solid #1d4ed8',
+                width: '240px',
+                height: '240px',
+                backgroundColor:  '#ECF1F9',
+                border: '10px solid #02ABF1',
             }}
         >
             <div className={style.contents}>
@@ -46,6 +46,8 @@ export default function TaskNode({ id, data, isConnectable }: NodeProps<TaskNode
                     style={{
                         textAlign: 'center',
                         fontSize: '1.4rem',
+                        
+                color: "#696969",
                     }}
                 >
                     {label}

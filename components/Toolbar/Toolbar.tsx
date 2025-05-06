@@ -1,21 +1,19 @@
-// 'use client';
+'use client';
 
 import React from 'react';
 import {
     EuiPanel,
     EuiFormRow,
-    // EuiColorPicker,
     EuiRange,
     EuiSelect,
+    EuiSwitch,
 } from '@elastic/eui';
 import { useGraphStore } from '@/stores/useGraphStore';
-
-// Dynamic importing for the EuiColorPicker to avoid SSR issues
 import dynamic from "next/dynamic";
+
 const ColorPicker = dynamic(() => import("./ColorPickerWrapper"), {
     ssr: false,
 });
-
 
 export default function Toolbar() {
     const edgeStyle = useGraphStore((state) => state.edgeStyle);
@@ -31,6 +29,14 @@ export default function Toolbar() {
 
     const handleDashChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setEdgeStyle({ ...edgeStyle, strokeDasharray: e.target.value });
+    };
+
+    const handleArrowToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEdgeStyle({ ...edgeStyle, arrow: e.target.checked });
+    };
+
+    const handleEdgeTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setEdgeStyle({ ...edgeStyle, type: e.target.value });
     };
 
     return (
@@ -50,11 +56,9 @@ export default function Toolbar() {
             }}
         >
             <EuiFormRow label="Edge Color">
-
                 <ColorPicker
                     color={edgeStyle.stroke}
                     onChange={handleColorChange}
-                // fullWidth
                 />
             </EuiFormRow>
 
@@ -63,8 +67,7 @@ export default function Toolbar() {
                     min={1}
                     max={10}
                     value={edgeStyle.strokeWidth}
-                    // @ts-expect-error // The Eui component does not want this kind of function,
-                    // but it works just fine
+                    // @ts-expect-error
                     onChange={handleWidthChange}
                     showValue
                     fullWidth
@@ -81,6 +84,27 @@ export default function Toolbar() {
                     ]}
                     value={edgeStyle.strokeDasharray}
                     onChange={handleDashChange}
+                />
+            </EuiFormRow>
+
+            <EuiFormRow label="Arrow">
+                <EuiSwitch
+                    label="Show arrow"
+                    checked={edgeStyle.arrow ?? false}
+                    onChange={handleArrowToggle}
+                />
+            </EuiFormRow>
+
+            <EuiFormRow label="Edge Type">
+                <EuiSelect
+                    options={[
+                        { value: 'default', text: 'Bezier (Curved)' },
+                        { value: 'step', text: 'Step (Right-Angle)' },
+                        { value: 'straight', text: 'Straight' },
+                        { value: 'smoothstep', text: 'Smooth Step' },
+                    ]}
+                    value={edgeStyle.type ?? 'default'}
+                    onChange={handleEdgeTypeChange}
                 />
             </EuiFormRow>
         </EuiPanel>

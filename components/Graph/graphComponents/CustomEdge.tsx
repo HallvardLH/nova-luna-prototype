@@ -6,6 +6,8 @@ import {
     EdgeProps,
 } from 'reactflow';
 
+const markerEndId = 'custom-arrowhead';
+
 export default function CustomEdge({
     id,
     sourceX,
@@ -13,8 +15,6 @@ export default function CustomEdge({
     targetX,
     targetY,
     data,
-    // labelX,
-    // labelY,
 }: EdgeProps) {
     const [edgePath, labelXPos, labelYPos] = getBezierPath({
         sourceX,
@@ -26,18 +26,39 @@ export default function CustomEdge({
     const stroke = data?.stroke ?? '#000';
     const strokeWidth = data?.strokeWidth ?? 2;
     const strokeDasharray = data?.strokeDasharray ?? '';
+    const showArrow = data?.arrow === true;
 
     return (
         <>
+            {showArrow && (
+                <svg style={{ height: 0, width: 0 }}>
+                    <defs>
+                        <marker
+                            id={markerEndId}
+                            markerWidth="6"
+                            markerHeight="6"
+                            refX="6"
+                            refY="3"
+                            orient="auto"
+                            markerUnits="strokeWidth"
+                        >
+                            <path d="M 0 0 L 6 3 L 0 6 z" fill={stroke} />
+                        </marker>
+                    </defs>
+                </svg>
+            )}
+
             <BaseEdge
                 id={id}
                 path={edgePath}
+                markerEnd={showArrow ? `url(#${markerEndId})` : undefined}
                 style={{
                     stroke,
                     strokeWidth,
                     strokeDasharray,
                 }}
             />
+
             {data?.label && (
                 <EdgeLabelRenderer>
                     <div

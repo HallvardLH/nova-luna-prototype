@@ -192,7 +192,7 @@ export default function GraphFlowEditor() {
                 <Background
                     variant={BackgroundVariant.Cross}
                     gap={80}
-                    style={{ backgroundColor: '#F4EEEE' }}
+                    style={{ backgroundColor: '#ECF1F9' }}
                     color="#b4b2b2"
                 />
             </ReactFlow>
