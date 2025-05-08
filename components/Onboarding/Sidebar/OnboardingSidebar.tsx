@@ -28,19 +28,20 @@ export default function OnboardingSidebar() {
             <EuiHorizontalRule />
             <ol className={styles.linkList}>
                 {[
-                    'agent',
-                    'hub',
-                    'object',
-                    'task',
-                    'event',
+                    'introduction',
+                    'agents',
+                    'hubs',
+                    'objects',
+                    'tasks',
+                    'events',
                 ].map((step) => (
                     <li key={step}>
 
                         <Link onClick={() => setCurrentStep(step as EntityNames)}
-                            href={`/creation/${step}s`}
+                            href={`/creation/${step}`}
                             className={`${styles.button} ${currentStep === step ? styles.active : ''}`}
                         >
-                            {capitalizeFirstLetter(step + "s")}
+                            {capitalizeFirstLetter(step)}
                         </Link>
                     </li>
                 ))}

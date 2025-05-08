@@ -1,0 +1,7 @@
+.icon {
+    transition: scale 75ms ease-in-out;
+}
+
+.unselectedIcon:hover {
+    scale: 1.1 !important;
+}

@@ -10,6 +10,7 @@ import AddObject from './Entities/AddObject';
 import AddEvent from './Entities/AddEvent';
 import AddTask from './Entities/AddTask';
 import EditNodeModal from './Graph/graphComponents/EditNodeModal';
+import OnboardingGuide from './Onboarding/Guide/OnboardingGuide';
 
 export default function Modals() {
     return (
@@ -25,6 +26,8 @@ export default function Modals() {
             <AddTask />
 
             <EditNodeModal />
+
+            <OnboardingGuide />
         </>
     );
 }
