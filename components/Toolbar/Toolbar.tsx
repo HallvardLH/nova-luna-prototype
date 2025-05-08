@@ -95,7 +95,7 @@ export default function Toolbar() {
                 />
             </EuiFormRow>
 
-            <EuiFormRow label="Edge Type">
+            {/* <EuiFormRow label="Edge Type">
                 <EuiSelect
                     options={[
                         { value: 'default', text: 'Bezier (Curved)' },
@@ -106,7 +106,7 @@ export default function Toolbar() {
                     value={edgeStyle.type ?? 'default'}
                     onChange={handleEdgeTypeChange}
                 />
-            </EuiFormRow>
+            </EuiFormRow> */}
         </EuiPanel>
     );
 }

@@ -9,6 +9,7 @@ import { useEntitiesStore } from '@/stores/useEntitiesStore';
 import EntityTable from '@/components/Entities/Overviews/EntityTable';
 import EntityIcon from '@/components/Sidebar/buildingBlocks/EntityIcon';
 import { useGraphStore } from '@/stores/useGraphStore';
+import { TaskNodeData } from './TaskNode';
 
 export default function EditNodeModal() {
     const isOpen = useModalStore((state) => state.modals.editNode);
@@ -25,7 +26,8 @@ export default function EditNodeModal() {
 
         updateNodeData(selectedNodeId, (data) => {
             const key = type + 's';
-            const alreadyHasEntity = Array.isArray(data[key]) && data[key].length > 0;
+            const entities = data[key as keyof TaskNodeData];
+            const alreadyHasEntity = Array.isArray(entities) && entities.length > 0;
 
             if (alreadyHasEntity) return data; // Only allow one of each type
 

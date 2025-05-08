@@ -9,7 +9,7 @@ import ReactFlow, {
     applyNodeChanges,
     Connection,
     Edge,
-    Node,
+    // Node,
     useReactFlow,
     BackgroundVariant,
     NodeChange,
@@ -77,12 +77,13 @@ export default function GraphFlowEditor() {
     );
 
     const onNodeClick = useCallback(
-        (event: React.MouseEvent, node: Node) => {
+        (event: React.MouseEvent) => {
             event.stopPropagation();
             setTooltipPosition({ x: event.clientX, y: event.clientY });
         },
         [setTooltipPosition]
     );
+
 
     const onEdgeClick = useCallback(
         (event: React.MouseEvent, edge: Edge) => {

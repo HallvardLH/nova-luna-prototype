@@ -7,7 +7,7 @@ import { useModalStore } from '@/stores/useModalStore';
 import { useGraphStore } from '@/stores/useGraphStore';
 import { useEntitiesStore } from '@/stores/useEntitiesStore';
 
-type TaskNodeData = {
+export type TaskNodeData = {
     label?: string;
     objects?: string[];
     agents?: string[];
@@ -37,7 +37,7 @@ export default function TaskNode({ id, data, isConnectable }: NodeProps<TaskNode
             style={{
                 width: '240px',
                 height: '240px',
-                backgroundColor:  '#ECF1F9',
+                backgroundColor: '#ECF1F9',
                 border: '10px solid #02ABF1',
             }}
         >
@@ -46,8 +46,8 @@ export default function TaskNode({ id, data, isConnectable }: NodeProps<TaskNode
                     style={{
                         textAlign: 'center',
                         fontSize: '1.4rem',
-                        
-                color: "#696969",
+
+                        color: "#696969",
                     }}
                 >
                     {label}

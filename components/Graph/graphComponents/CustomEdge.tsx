@@ -2,8 +2,8 @@ import React from 'react';
 import {
     BaseEdge,
     EdgeLabelRenderer,
-    getBezierPath,
     EdgeProps,
+    getSimpleBezierPath
 } from 'reactflow';
 
 const markerEndId = 'custom-arrowhead';
@@ -15,13 +15,19 @@ export default function CustomEdge({
     targetX,
     targetY,
     data,
+    sourcePosition,
+    targetPosition,
 }: EdgeProps) {
-    const [edgePath, labelXPos, labelYPos] = getBezierPath({
+
+    const [edgePath, labelXPos, labelYPos] = getSimpleBezierPath({
         sourceX,
         sourceY,
+        sourcePosition,
         targetX,
         targetY,
+        targetPosition,
     });
+
 
     const stroke = data?.stroke ?? '#000';
     const strokeWidth = data?.strokeWidth ?? 2;
@@ -57,6 +63,7 @@ export default function CustomEdge({
                     strokeWidth,
                     strokeDasharray,
                 }}
+
             />
 
             {data?.label && (

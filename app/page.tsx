@@ -6,8 +6,7 @@ import GraphPage from "@/components/Graph/GraphPage";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { EuiPageSidebar, EuiPageSection } from "@elastic/eui";
 import Modals from "@/components/Modals";
-import Toolbar from "@/components/Toolbar/Toolbar";
-
+// import Toolbar from "@/components/Toolbar/Toolbar";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -42,7 +41,7 @@ export default function Home() {
                         <GraphPage />
                     </EuiPageSection>
 
-                    <Toolbar />
+                    {/* <Toolbar /> */}
 
                 </div>
             </div>
