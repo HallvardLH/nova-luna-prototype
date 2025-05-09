@@ -1,0 +1,30 @@
+.guideContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.guideSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.guideTitle {
+    color: var(--purple-color-light) !important;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.guideText {
+    text-align: center;
+}
+
+.agentButton {
+    background-color: var(--agent-color-light) !important;
+    color: white !important;
+}
+
+.hubButton {
+    background-color: var(--hub-color-light) !important;
+    color: white !important;
+}

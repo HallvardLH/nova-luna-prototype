@@ -1,6 +1,29 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Entity colors */
+  --agent-color: #FE0000;
+  --agent-color-light: #FD8F8F;
+
+  --hub-color: #02AE4F;
+  --hub-color-light: #81D7A7;
+
+  --object-color: #ED7D31;
+  --object-color-light: #F6BE98;
+
+  --event-color: #7835AE;
+  --event-color-light: #BC9AD7;
+
+  --task-color: #02ABF1;
+  --task-color-light: #A4D8F1;
+
+  /* Flair */
+  --golden-color: #B1A452;
+  --purple-color: #6034FF;
+  --purple-color-light: #A737C8;
+
+
 }
 
 @media (prefers-color-scheme: dark) {
