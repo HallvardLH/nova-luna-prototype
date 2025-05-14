@@ -4,7 +4,7 @@ import React from 'react';
 import {
     EuiPanel,
     EuiFormRow,
-    EuiRange,
+    // EuiRange,
     EuiSelect,
     // EuiSwitch
 } from '@elastic/eui';
@@ -64,18 +64,16 @@ export default function Toolbar() {
                 />
             </EuiFormRow>
 
-            <EuiFormRow label="Edge Thickness">
+            {/* <EuiFormRow label="Edge Thickness">
                 <EuiRange
                     min={1}
                     max={10}
                     value={edgeStyle.strokeWidth}
-                    // @ts-expect-error
-                    // error in Eui code
                     onChange={handleWidthChange}
                     showValue
                     fullWidth
                 />
-            </EuiFormRow>
+            </EuiFormRow> */}
 
             <EuiFormRow label="Stroke Style">
                 <EuiSelect
