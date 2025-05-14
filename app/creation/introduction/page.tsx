@@ -3,7 +3,6 @@
 import OnboardingSidebar from "@/components/Onboarding/Sidebar/OnboardingSidebar";
 import styles from "../page.module.css";
 import OnboardingProgress from "@/components/Onboarding/OnboardingProgress/OnboardingProgress";
-import HubOverview from "@/components/Entities/Overviews/HubOverview";
 import Modals from "@/components/Modals";
 import { EuiText, EuiButton, EuiIcon, EuiFlexGroup } from "@elastic/eui";
 import { useModalStore } from "@/stores/useModalStore";

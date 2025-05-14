@@ -31,13 +31,13 @@ export default function Toolbar() {
         setEdgeStyle({ ...edgeStyle, strokeDasharray: e.target.value });
     };
 
-    const handleArrowToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEdgeStyle({ ...edgeStyle, arrow: e.target.checked });
-    };
+    // const handleArrowToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setEdgeStyle({ ...edgeStyle, arrow: e.target.checked });
+    // };
 
-    const handleEdgeTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setEdgeStyle({ ...edgeStyle, type: e.target.value });
-    };
+    // const handleEdgeTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     setEdgeStyle({ ...edgeStyle, type: e.target.value });
+    // };
 
     return (
         <EuiPanel
@@ -87,13 +87,13 @@ export default function Toolbar() {
                 />
             </EuiFormRow>
 
-            <EuiFormRow label="Arrow">
+            {/* <EuiFormRow label="Arrow">
                 <EuiSwitch
                     label="Show arrow"
                     checked={edgeStyle.arrow ?? false}
                     onChange={handleArrowToggle}
                 />
-            </EuiFormRow>
+            </EuiFormRow> */}
 
             {/* <EuiFormRow label="Edge Type">
                 <EuiSelect
