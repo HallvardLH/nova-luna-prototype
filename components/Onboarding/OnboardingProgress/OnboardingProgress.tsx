@@ -1,7 +1,7 @@
 'use client';
 
 import EntityIcon from "@/components/Sidebar/buildingBlocks/EntityIcon";
-import { EuiText, EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
+import { EuiText, EuiFlexGroup, EuiFlexItem, EuiButton, EuiIcon } from "@elastic/eui";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
 import Link from "next/link";
 import styles from "./OnboardingProgress.module.css";
@@ -19,6 +19,19 @@ export default function OnboardingProgress() {
     const setCurrentStep = useOnboardingStore((state) => state.setCurrentStep);
 
     return (
+        <>
+        <div style={{
+            position: 'absolute',
+            right: '150px',
+        }}>
+            <Link href={"/"}>
+            <EuiButton iconType={() => <EuiIcon type="check" />} style={{
+                backgroundColor: 'white',
+            }}>
+                Finish workshop
+                </EuiButton>
+                </Link>
+        </div>
         <EuiFlexGroup style={{ flexGrow: 0 }}>
             {entities.map((entity) => (
                 <EuiFlexItem key={entity} grow={false}>
@@ -34,5 +47,6 @@ export default function OnboardingProgress() {
                 </EuiFlexItem>
             ))}
         </EuiFlexGroup>
+        </>
     );
 }
