@@ -6,7 +6,6 @@ import {
     EuiFormRow,
     EuiRange,
     EuiSelect,
-    EuiSwitch,
 } from '@elastic/eui';
 import { useGraphStore } from '@/stores/useGraphStore';
 import dynamic from "next/dynamic";

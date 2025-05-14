@@ -21,12 +21,12 @@ export default function Sidebar() {
                     width={30}
                     height={30}
                 />
-                <Image
+                {/* <Image
                     src={'/icons/close-menu.svg'}
                     alt={""}
                     width={30}
                     height={30}
-                />
+                /> */}
             </div>
             <EuiHorizontalRule />
             <div className={styles.buildingBlocksContainer}>
