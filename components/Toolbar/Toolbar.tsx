@@ -4,9 +4,9 @@ import React from 'react';
 import {
     EuiPanel,
     EuiFormRow,
-    EuiRange,
+    // EuiRange,
     EuiSelect,
-    EuiSwitch,
+    // EuiSwitch
 } from '@elastic/eui';
 import { useGraphStore } from '@/stores/useGraphStore';
 import dynamic from "next/dynamic";
@@ -23,21 +23,23 @@ export default function Toolbar() {
         setEdgeStyle({ ...edgeStyle, stroke: color });
     };
 
-    const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEdgeStyle({ ...edgeStyle, strokeWidth: parseInt(e.target.value, 10) });
-    };
+    // const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setEdgeStyle({ ...edgeStyle, strokeWidth: parseInt(e.target.value, 10) });
+    // };
 
     const handleDashChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setEdgeStyle({ ...edgeStyle, strokeDasharray: e.target.value });
     };
 
-    const handleArrowToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEdgeStyle({ ...edgeStyle, arrow: e.target.checked });
-    };
+    // const handleArrowToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     // @ts-expect-error
+    //     // e.target.checked is a boolean, but edgeStyle.arrow is a string | boolean
+    //     setEdgeStyle({ ...edgeStyle, arrow: e.target.checked });
+    // };
 
-    const handleEdgeTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setEdgeStyle({ ...edgeStyle, type: e.target.value });
-    };
+    // const handleEdgeTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     setEdgeStyle({ ...edgeStyle, type: e.target.value });
+    // };
 
     return (
         <EuiPanel
@@ -62,17 +64,16 @@ export default function Toolbar() {
                 />
             </EuiFormRow>
 
-            <EuiFormRow label="Edge Thickness">
+            {/* <EuiFormRow label="Edge Thickness">
                 <EuiRange
                     min={1}
                     max={10}
                     value={edgeStyle.strokeWidth}
-                    // @ts-expect-error
                     onChange={handleWidthChange}
                     showValue
                     fullWidth
                 />
-            </EuiFormRow>
+            </EuiFormRow> */}
 
             <EuiFormRow label="Stroke Style">
                 <EuiSelect
@@ -87,13 +88,13 @@ export default function Toolbar() {
                 />
             </EuiFormRow>
 
-            <EuiFormRow label="Arrow">
+            {/* <EuiFormRow label="Arrow">
                 <EuiSwitch
                     label="Show arrow"
                     checked={edgeStyle.arrow ?? false}
                     onChange={handleArrowToggle}
                 />
-            </EuiFormRow>
+            </EuiFormRow> */}
 
             {/* <EuiFormRow label="Edge Type">
                 <EuiSelect

@@ -3,6 +3,8 @@ import EntityButton from './buildingBlocks/EntityButton';
 // import { EuiFieldSearch, EuiHorizontalRule } from '@elastic/eui';
 import { EuiHorizontalRule } from '@elastic/eui';
 import Image from 'next/image';
+import Link from 'next/link';
+import { EuiButton, EuiIcon } from '@elastic/eui';
 // import { useState } from 'react';
 
 export default function Sidebar() {
@@ -14,19 +16,33 @@ export default function Sidebar() {
 
     return (
         <div className={styles.container}>
+            <div style={{
+                position: 'absolute',
+                top: '10px',
+            }}>
+                        <Link href={"/landing"}>
+                            <EuiButton iconType={() => <EuiIcon type="arrowLeft" />} style={{
+                                backgroundColor: 'white',
+                            }}>
+                                Back to start
+                                </EuiButton>
+                                </Link>
+                                </div>
             <div className={styles.top}>
+
                 <Image
                     src={'/nova-luna-logo.svg'}
                     alt={""}
                     width={30}
                     height={30}
                 />
-                <Image
+
+                {/* <Image
                     src={'/icons/close-menu.svg'}
                     alt={""}
                     width={30}
                     height={30}
-                />
+                /> */}
             </div>
             <EuiHorizontalRule />
             <div className={styles.buildingBlocksContainer}>

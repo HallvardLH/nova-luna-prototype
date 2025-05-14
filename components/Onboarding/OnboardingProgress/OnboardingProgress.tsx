@@ -1,7 +1,7 @@
 'use client';
 
 import EntityIcon from "@/components/Sidebar/buildingBlocks/EntityIcon";
-import { EuiText, EuiFlexGroup, EuiFlexItem } from "@elastic/eui";
+import { EuiText, EuiFlexGroup, EuiFlexItem, EuiButton, EuiIcon } from "@elastic/eui";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
 import Link from "next/link";
 import styles from "./OnboardingProgress.module.css";
