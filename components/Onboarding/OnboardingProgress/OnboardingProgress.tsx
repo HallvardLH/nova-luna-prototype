@@ -47,54 +47,68 @@ export default function OnboardingProgress() {
     };
 
     return (
-        <EuiFlexGroup style={{ flexGrow: 0 }} alignItems="center">
-            <EuiFlexItem grow={false}>
-                <div onClick={goToPrevious} style={{ cursor: 'pointer' }}>
-                    <Image
-                        src="/images/arrow-left.webp"
-                        alt="Previous"
-                        width={70}
-                        height={175}
-                        className={styles.arrow}
-                    />
-                </div>
-            </EuiFlexItem>
-
-            {steps.slice(1).map((entity) => (
-                <EuiFlexItem key={entity} grow={false}>
-                    <Link
-                        onClick={() => navigateTo(entity)}
-                        href={`/creation/${entity}s`}
-                        style={{ textDecoration: 'none', color: 'inherit' }}
-                    >
-                        <div
-                            className={`${styles.icon} ${entity !== currentStep ? styles.unselectedIcon : ""
-                                }`}
-                            style={{
-                                scale: entity === currentStep ? "1.3" : "1",
-                                textAlign: 'center',
-                            }}
-                        >
-                            <EuiText>
-                                {entity.charAt(0).toUpperCase() + entity.slice(1) + "s"}
-                            </EuiText>
-                            <EntityIcon entity={entity as EntityNames} size={100} />
-                        </div>
-                    </Link>
+        <>
+            <div style={{
+                position: 'absolute',
+                right: '150px',
+            }}>
+                <Link href={"/"}>
+                    <EuiButton iconType={() => <EuiIcon type="check" />} style={{
+                        backgroundColor: 'white',
+                    }}>
+                        Finish workshop
+                    </EuiButton>
+                </Link>
+            </div>
+            <EuiFlexGroup style={{ flexGrow: 0 }} alignItems="center">
+                <EuiFlexItem grow={false}>
+                    <div onClick={goToPrevious} style={{ cursor: 'pointer' }}>
+                        <Image
+                            src="/images/arrow-left.webp"
+                            alt="Previous"
+                            width={70}
+                            height={175}
+                            className={styles.arrow}
+                        />
+                    </div>
                 </EuiFlexItem>
-            ))}
 
-            <EuiFlexItem grow={false}>
-                <div onClick={goToNext} style={{ cursor: 'pointer' }}>
-                    <Image
-                        src="/images/arrow-right.webp"
-                        alt="Next"
-                        width={70}
-                        height={175}
-                        className={styles.arrow}
-                    />
-                </div>
-            </EuiFlexItem>
-        </EuiFlexGroup>
+                {steps.slice(1).map((entity) => (
+                    <EuiFlexItem key={entity} grow={false}>
+                        <Link
+                            onClick={() => navigateTo(entity)}
+                            href={`/creation/${entity}s`}
+                            style={{ textDecoration: 'none', color: 'inherit' }}
+                        >
+                            <div
+                                className={`${styles.icon} ${entity !== currentStep ? styles.unselectedIcon : ""
+                                    }`}
+                                style={{
+                                    scale: entity === currentStep ? "1.3" : "1",
+                                    textAlign: 'center',
+                                }}
+                            >
+                                <EuiText>
+                                    {entity.charAt(0).toUpperCase() + entity.slice(1) + "s"}
+                                </EuiText>
+                                <EntityIcon entity={entity as EntityNames} size={100} />
+                            </div>
+                        </Link>
+                    </EuiFlexItem>
+                ))}
+
+                <EuiFlexItem grow={false}>
+                    <div onClick={goToNext} style={{ cursor: 'pointer' }}>
+                        <Image
+                            src="/images/arrow-right.webp"
+                            alt="Next"
+                            width={70}
+                            height={175}
+                            className={styles.arrow}
+                        />
+                    </div>
+                </EuiFlexItem>
+            </EuiFlexGroup>
+        </>
     );
 }
