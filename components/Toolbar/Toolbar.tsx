@@ -23,9 +23,9 @@ export default function Toolbar() {
         setEdgeStyle({ ...edgeStyle, stroke: color });
     };
 
-    const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEdgeStyle({ ...edgeStyle, strokeWidth: parseInt(e.target.value, 10) });
-    };
+    // const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setEdgeStyle({ ...edgeStyle, strokeWidth: parseInt(e.target.value, 10) });
+    // };
 
     const handleDashChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setEdgeStyle({ ...edgeStyle, strokeDasharray: e.target.value });
