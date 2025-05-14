@@ -83,8 +83,8 @@ export const useGraphStore = create<GraphState>()(
             setEdgeType: (type) => set({ edgeType: type }),
 
             edgeStyle: {
-                stroke: '#000000',
-                strokeWidth: 2,
+                stroke: '#7b38b2',
+                strokeWidth: 5,
                 strokeDasharray: '',
             },
             setEdgeStyle: (style) =>

@@ -6,6 +6,7 @@ import {
     EuiFormRow,
     EuiRange,
     EuiSelect,
+    // EuiSwitch
 } from '@elastic/eui';
 import { useGraphStore } from '@/stores/useGraphStore';
 import dynamic from "next/dynamic";
@@ -31,6 +32,8 @@ export default function Toolbar() {
     };
 
     // const handleArrowToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     // @ts-expect-error
+    //     // e.target.checked is a boolean, but edgeStyle.arrow is a string | boolean
     //     setEdgeStyle({ ...edgeStyle, arrow: e.target.checked });
     // };
 
@@ -67,6 +70,7 @@ export default function Toolbar() {
                     max={10}
                     value={edgeStyle.strokeWidth}
                     // @ts-expect-error
+                    // error in Eui code
                     onChange={handleWidthChange}
                     showValue
                     fullWidth
