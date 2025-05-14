@@ -3,13 +3,15 @@
 import OnboardingSidebar from "@/components/Onboarding/Sidebar/OnboardingSidebar";
 import styles from "../page.module.css";
 import OnboardingProgress from "@/components/Onboarding/OnboardingProgress/OnboardingProgress";
-import HubOverview from "@/components/Entities/Overviews/HubOverview";
 import Modals from "@/components/Modals";
 import { EuiText, EuiButton, EuiIcon, EuiFlexGroup } from "@elastic/eui";
 import { useModalStore } from "@/stores/useModalStore";
+import { useOnboardingStore } from "@/stores/useOnboardingStore";
+import Link from "next/link";
 
 export default function IntroductionPage() {
     const open = useModalStore((state) => state.open);
+    const setCurrentStep = useOnboardingStore((state) => state.setCurrentStep);
 
     return (
         <div className={styles.page}>
@@ -37,19 +39,19 @@ export default function IntroductionPage() {
                     >
                         Guide
                     </EuiButton>
-                    <EuiButton
-                        iconType={() => <EuiIcon type="arrowRight" style={{ fill: '#6034FF' }} />}
-                        style={{
-                            backgroundColor: 'white',
-                            border: '2px solid #6034FF',
-                            color: '#6034FF',
-                        }}
-                    >
-                        Get started
-                    </EuiButton>
+                    <Link onClick={() => setCurrentStep("agent")} href={"/creation/agents"}>
+                        <EuiButton
+                            iconType={() => <EuiIcon type="arrowRight" style={{ fill: '#6034FF' }} />}
+                            style={{
+                                backgroundColor: 'white',
+                                border: '2px solid #6034FF',
+                                color: '#6034FF',
+                            }}
+                        >
+                            Get started
+                        </EuiButton>
+                    </Link>
                 </EuiFlexGroup>
-
-
             </div>
             <Modals />
         </div>

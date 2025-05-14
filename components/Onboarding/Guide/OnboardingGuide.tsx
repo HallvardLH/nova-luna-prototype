@@ -40,10 +40,10 @@ export default function OnboardingGuide() {
                             This guide will show you how the game creation works
                         </EuiText>
 
-                        <EuiFlexGroup style={{ justifyContent: "space-around", marginTop: "2rem", marginBottom: "2rem" }}>
+                        <EuiFlexGroup style={{ justifyContent: "space-around", marginTop: "2rem", marginBottom: "5rem" }}>
                             {entities.map((entity) => (
-                                <div key={entity}>
-                                    <EuiText style={{ textAlign: "center", fontSize: "1.5rem" }}>
+                                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }} key={entity}>
+                                    <EuiText className={styles[entity + "Color"]} style={{ textAlign: "center", fontSize: "1.5rem" }}>
                                         {entity.charAt(0).toUpperCase() + entity.slice(1) + "s"}
                                     </EuiText>
                                     <EntityIcon size={50} entity={entity} />
@@ -96,6 +96,36 @@ export default function OnboardingGuide() {
                                     >
                                         Add hub
                                     </EuiButton>
+                                </div>
+                            </div>
+
+                            <div className={styles.guideSection}>
+                                <EuiText className={styles.guideTitle}>
+                                    <h2>Edit or remove</h2>
+                                </EuiText>
+                                <EuiText className={styles.guideText}>
+                                    If you want to edit or remove building blocks, simply hover over the one you want to edit or remove, and press the icons. A pop-up with instructions will then appear.
+                                </EuiText>
+                                <div style={{ display: "flex", marginTop: "1rem", gap: "1rem", justifyContent: "center" }}>
+                                    <EuiIcon type="cross" style={{ fill: "#1D2A3E" }} />
+                                    <EuiIcon type="documentEdit" style={{ fill: "#1D2A3E" }} />
+                                </div>
+                            </div>
+
+                            <div className={styles.guideSection}>
+                                <EuiText className={styles.guideTitle}>
+                                    <h2>Specification</h2>
+                                </EuiText>
+                                <EuiText className={styles.guideText}>
+                                    Some building blocks need more specification than others.You need to clearly specify which category an object is, and the order of the quests.
+                                </EuiText>
+                                <div style={{ display: "flex", marginTop: "1rem", justifyContent: "center", gap: "1rem" }}>
+                                    <Image
+                                        src="/images/quest-illustration.webp"
+                                        alt=""
+                                        width={220}
+                                        height={25}
+                                    />
                                 </div>
                             </div>
                         </div>

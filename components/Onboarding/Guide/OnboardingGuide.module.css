@@ -1,7 +1,7 @@
 .guideContainer {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    gap: 5rem;
 }
 
 .guideSection {
@@ -27,4 +27,24 @@
 .hubButton {
     background-color: var(--hub-color-light) !important;
     color: white !important;
+}
+
+.agentColor {
+    color: var(--agent-color) !important;
+}
+
+.hubColor {
+    color: var(--hub-color) !important;
+}
+
+.objectColor {
+    color: var(--object-color) !important;
+}
+
+.taskColor {
+    color: var(--task-color) !important;
+}
+
+.eventColor {
+    color: var(--event-color) !important;
 }

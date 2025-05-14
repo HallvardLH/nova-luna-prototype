@@ -37,9 +37,9 @@ export default function OnboardingSidebar() {
                 ].map((step) => (
                     <li key={step}>
 
-                        <Link onClick={() => setCurrentStep(step as EntityNames)}
+                        <Link onClick={() => setCurrentStep(step == "introduction" ? step : step.slice(0, -1) as EntityNames | "introduction")}
                             href={`/creation/${step}`}
-                            className={`${styles.button} ${currentStep === step ? styles.active : ''}`}
+                            className={`${styles.button} ${currentStep + (currentStep == "introduction" ? "" : "s") === step ? styles.active : ''}`}
                         >
                             {capitalizeFirstLetter(step)}
                         </Link>

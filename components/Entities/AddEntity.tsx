@@ -6,13 +6,12 @@ import {
     EuiModalHeaderTitle,
     EuiModalBody,
     EuiModalFooter,
-    EuiButtonEmpty,
-    EuiFlexGroup,
     EuiFlexItem,
     EuiFormRow,
     EuiFieldText,
     EuiTextArea,
     EuiButton,
+    EuiIcon
 } from '@elastic/eui';
 import { ModalName, useModalStore } from '@/stores/useModalStore';
 import { useEntitiesStore } from '@/stores/useEntitiesStore';
@@ -59,12 +58,8 @@ export default function AddEntity({ entity, modalName }: AddEntityProps) {
                     </EuiModalHeader>
 
                     <EuiModalBody>
-                        <EuiFlexGroup direction="column" gutterSize="m">
-                            <EuiFlexItem grow={false}>
-                                <EntityIcon entity={entity} size={150} />
-                            </EuiFlexItem>
-
-                            <EuiFlexItem>
+                        <div style={{ display: 'grid', gridTemplateColumns: '200px 1fr', gap: '20px' }}>
+                            <EuiFlexItem style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: "2rem" }}>
                                 <EuiFormRow label={`${capitalizeFirstLetter(entity)} name`}>
                                     <EuiFieldText
                                         value={name}
@@ -72,26 +67,37 @@ export default function AddEntity({ entity, modalName }: AddEntityProps) {
                                         placeholder={`Enter ${entity} name`}
                                     />
                                 </EuiFormRow>
+                                <EntityIcon entity={entity} size={150} />
                             </EuiFlexItem>
 
                             <EuiFlexItem>
                                 <EuiFormRow label="Description">
                                     <EuiTextArea
+                                        style={{ width: '1000px' }}
                                         value={description}
                                         onChange={(e) => setDescription(e.target.value)}
                                         placeholder={`Enter ${entity} description`}
-                                        rows={4}
+                                        rows={8}
                                     />
                                 </EuiFormRow>
                             </EuiFlexItem>
-                        </EuiFlexGroup>
+                        </div>
                     </EuiModalBody>
 
                     <EuiModalFooter>
-                        <EuiButtonEmpty onClick={() => close(modalName)}>
-                            Cancel
-                        </EuiButtonEmpty>
-                        <EuiButton fill onClick={handleCreate} isDisabled={!name.trim()}>
+
+                        <EuiButton
+                            iconType={() => <EuiIcon type="minimize" style={{ fill: '#6034FF' }} />}
+                            onClick={() => close(modalName)}
+                        >
+                            Close
+                        </EuiButton>
+                        <EuiButton
+                            iconType={() => <EuiIcon type="plus" style={{ fill: '#6034FF' }} />}
+                            // fill
+                            onClick={handleCreate}
+                            isDisabled={!name.trim()}
+                        >
                             Create {capitalizeFirstLetter(entity)}
                         </EuiButton>
                     </EuiModalFooter>

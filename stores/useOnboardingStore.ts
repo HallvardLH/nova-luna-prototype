@@ -9,8 +9,8 @@ interface OnboardingState {
     setOnboarding: (onboarding: boolean) => void;
     variant: onBoardingVariant;
     setVariant: (variant: onBoardingVariant) => void;
-    currentStep: EntityNames;
-    setCurrentStep: (entity: EntityNames) => void;
+    currentStep: EntityNames | "introduction";
+    setCurrentStep: (entity: EntityNames | "introduction") => void;
 }
 
 export const useOnboardingStore = create<OnboardingState>()(
@@ -21,7 +21,7 @@ export const useOnboardingStore = create<OnboardingState>()(
             variant: "pen and paper",
             setVariant: (variant: onBoardingVariant) => set({ variant }),
             currentStep: "agent",
-            setCurrentStep: (entity: EntityNames) => set({ currentStep: entity }),
+            setCurrentStep: (entity: EntityNames | "introduction") => { set({ currentStep: entity }); console.log(entity); },
         }),
         {
             name: 'onboarding-storage',

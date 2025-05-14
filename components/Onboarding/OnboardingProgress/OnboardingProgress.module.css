@@ -5,3 +5,7 @@
 .unselectedIcon:hover {
     scale: 1.1 !important;
 }
+
+.arrow:hover {
+    filter: brightness(0.8);
+}
